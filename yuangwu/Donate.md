@@ -3,13 +3,13 @@
 > 
 > <div style="display: flex; gap: 30px; align-items: center; flex-wrap: wrap;">
 >   <div>
->     <a href="https://github.com/yuangwu/obsidian-bangumi/blob/main/yuangwu/Donate/%E6%94%AF%E4%BB%98%E5%AE%9D.jpg" target="_blank">
->       <img src="https://github.com/yuangwu/obsidian-bangumi/blob/main/yuangwu/Donate/%E6%94%AF%E4%BB%98%E5%AE%9D.jpg?raw=true" alt="支付宝收款码" width="300">
+>     <a href="https://github.com/yuangwu/obsidian-pure-hide/edit/main/yuangwu/Donate/%E6%94%AF%E4%BB%98%E5%AE%9D.jpg" target="_blank">
+>       <img src="https://github.com/yuangwu/obsidian-pure-hide/edit/main/yuangwu/Donate/%E6%94%AF%E4%BB%98%E5%AE%9D.jpg?raw=true" alt="支付宝收款码" width="300">
 >     </a>
 >   </div>
 >   <div>
->     <a href="https://github.com/yuangwu/obsidian-bangumi/blob/main/yuangwu/Donate/%E5%BE%AE%E4%BF%A1.jpg" target="_blank">
->       <img src="https://github.com/yuangwu/obsidian-bangumi/blob/main/yuangwu/Donate/%E5%BE%AE%E4%BF%A1.jpg?raw=true" alt="微信收款码" width="300">
+>     <a href="https://github.com/yuangwu/obsidian-pure-hide/edit/main/yuangwu/Donate/%E5%BE%AE%E4%BF%A1.jpg" target="_blank">
+>       <img src="https://github.com/yuangwu/obsidian-pure-hide/edit/main/yuangwu/Donate/%E5%BE%AE%E4%BF%A1.jpg?raw=true" alt="微信收款码" width="300">
 >     </a>
 >   </div>
 > </div>
