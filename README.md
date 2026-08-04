@@ -1,8 +1,8 @@
 # Pure Hide
 
 **Pure Hide** 是一个为  [Obsidian](https://obsidian.md/) 设计的全能界面美化与排版增强插件，整合了**界面隐藏、独立布局、精细排版、圆角材质、毛玻璃效果、交互细节**等 100+ 可配置选项，完全基于 Obsidian 核心变量，自动适配任意主题。
--  [GitHub 仓库] (https://github.com/yuangwu/obsidian-pure-hide)
--  [作者主页] (https://github.com/yuangwu)
+-  [GitHub 仓库](https://github.com/yuangwu/obsidian-pure-hide)
+-  [作者主页](https://github.com/yuangwu)
 ---
 
 ## 📖 简介
