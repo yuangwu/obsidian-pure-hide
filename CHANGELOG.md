@@ -2,13 +2,32 @@
 
 > 本文档记录了 Obsidian Pure Hide 插件所有版本的重要变更。
 
-**当前版本**：`v1.0.1`  
+**当前版本**：`v1.0.2`  
 **项目阶段**：🚀 持续迭代  
-**最后更新**：2026-08-04
+**最后更新**：2026-08-05
 
 ---
 
 ## 📋 版本列表
+
+### [v 1.0.2] - 2026-08-05 — 品牌统一与 UI 优化
+
+#### ✨ 新增功能
+
+- **无新增功能，专注于代码规范化与视觉优化。**
+
+#### 🚀 优化改进
+
+- **品牌统一**：彻底移除所有 “bangumi” 相关命名（包括 CSS 类、JavaScript 变量、用户提示文本），全部替换为 “pure-hide”，确保与插件名称一致，避免品牌混淆。
+- **消除弹窗“框中框”视觉效果**：将 EULA 和打赏弹窗的内联样式从 `styles.css` 迁移至 `main.js` 的动态注入中，同时移除原有独立容器的背景、阴影和圆角，使弹窗内容直接融入 Obsidian 原生模态框，视觉上更加简洁统一。
+- **CSS 精简**：删除 `styles.css` 中冗余的 EULA/打赏样式块（原 Part 22），仅保留必要的排版与交互样式，减小文件体积，提升加载效率。
+
+#### 🔧 修复问题
+
+- 修复弹窗内容被额外容器包裹导致的视觉分层问题。
+- 修复部分情境下设置按钮位置切换后原生按钮未完全隐藏的边缘情况。
+
+---
 
 ### [v 1.0.1] - 2026-08-04 — 品牌统一与优化
 
@@ -119,7 +138,7 @@
 
 ## 🔗 相关文档
 
-- [README.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/README.md) - 项目介绍
-- [LICENSE.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/LICENSE.md) - 项目许可协议
-- [CHANGELOG.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CHANGELOG.md) - 更新日志
-- [CONTRIBUTING.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CONTRIBUTING.md) - 贡献指南
+- [README.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/README.md) - 项目介绍
+- [LICENSE.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/LICENSE.md) - 项目许可协议
+- [CHANGELOG.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CHANGELOG.md) - 更新日志
+- [CONTRIBUTING.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CONTRIBUTING.md) - 贡献指南
