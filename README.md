@@ -1,28 +1,28 @@
 # Pure Hide
 
-**Pure Hide** 是一个为  [Obsidian] (https://obsidian.md/) 设计的全能界面美化与排版增强插件，整合了**界面隐藏、独立布局、精细排版、圆角材质、毛玻璃效果、交互细节**等 100+ 可配置选项，完全基于 Obsidian 核心变量，自动适配任意主题。
-
+**Pure Hide** 是一个为  [Obsidian](https://obsidian.md/) 设计的全能界面美化与排版增强插件，整合了**界面隐藏、独立布局、精细排版、圆角材质、毛玻璃效果、交互细节**等 100+ 可配置选项，完全基于 Obsidian 核心变量，自动适配任意主题。
+-  [GitHub 仓库] (https://github.com/yuangwu/obsidian-pure-hide)
+-  [作者主页] (https://github.com/yuangwu)
 ---
 
 ## 📖 简介
 
 Pure Hide 旨在让您能够**一键隐藏干扰元素**，同时精细调整**排版、间距、圆角、透明度和动画**，打造属于您自己的沉浸式写作与阅读环境。所有样式均通过 CSS 变量与 Obsidian 主题无缝融合，无需额外 CSS 片段。
 
-**最新更新 (v1.0.1)**：品牌统一为 `pure-hide-*` 前缀，设置面板搜索完美支持中文输入（带防抖），代码可维护性大幅提升。
-
 ---
 
 ## ⚠️ 许可说明
 
-本软件采用 **专有许可证（Proprietary License）**，**保留所有权利**。您需要在首次使用时主动**点击同意**最终用户许可协议（EULA）方可启用插件。您可以在遵守协议的前提下，免费用于个人非商业用途。
+本软件采用 **专有许可证（Proprietary License）**，**保留所有权利**。您需要在首次使用时主动**点击同意**最终用户许可协议（EULA）方可启用插件。您可以在遵守协议的前提下，免费用于个人非商业用途。
 
 **严禁以下行为（包括但不限于）：**
-- 🚫 **倒卖与商业利用**：禁止在淘宝、闲鱼、小红书等平台销售、出租、租赁或转让本插件。如遇此类店铺贩售，**请不要购买！** 您支付的款项不会流向作者，您也无法获得任何更新或支持。
-- 🚫 **未经授权的修改与分发**：若以源代码形式分发，**必须保留原始版权声明及免责声明**；若以二进制形式分发，**必须在文档中复制版权和免责声明**。
-- 🚫 **删除版权标识**：不得删除、更改或遮盖本软件中的任何版权声明、商标或所有权标记。
-- 🚫 **使用原作者名义背书**：未经明确书面许可，不得使用版权持有人名称为您的衍生产品背书或推广。
 
-详细条款请阅读  [LICENSE.md](LICENSE.md) 文件。
+- 🚫 **倒卖与商业利用**：禁止在淘宝、闲鱼、小红书等平台销售、出租、租赁或转让本插件。如遇此类店铺贩售，**请不要购买！** 您支付的款项不会流向作者，您也无法获得任何更新或支持。
+- 🚫 **未经授权的修改与分发**：若以源代码形式分发，**必须保留原始版权声明及免责声明**；若以二进制形式分发，**必须在文档中复制版权和免责声明**。
+- 🚫 **删除版权标识**：不得删除、更改或遮盖本软件中的任何版权声明、商标或所有权标记。
+- 🚫 **使用原作者名义背书**：未经明确书面许可，不得使用版权持有人名称为您的衍生产品背书或推广。
+
+详细条款请阅读 [LICENSE.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/LICENSE.md) 文件。
 
 ---
 
@@ -47,13 +47,7 @@ Pure Hide 旨在让您能够**一键隐藏干扰元素**，同时精细调整**�
 
 ---
 
-## 📸 效果展示
-
-（此处可插入截图，展示隐藏前后的对比、毛玻璃效果、圆角、行高等）
-
----
-
-## 🚀 安装
+## 📦 如何安装
 
 ### 从 Obsidian 社区插件市场安装（待上架）
 1. 打开 Obsidian，进入「设置」→「社区插件」→「浏览」。
@@ -61,7 +55,7 @@ Pure Hide 旨在让您能够**一键隐藏干扰元素**，同时精细调整**�
 3. 点击安装并启用。
 
 ### 手动安装
-1. 从  [GitHub Releases] (https://github.com/yuangwu/obsidian-pure-hide/releases) 下载最新版本的 `main.js`、`manifest.json` 和 `styles.css`。
+1. 从 [GitHub Releases](https://github.com/yuangwu/obsidian-pure-hide/releases) 下载最新版本的 `main.js`、`manifest.json` 和 `styles.css`。
 2. 将这三个文件放入您的 Obsidian 仓库中的 `.obsidian/plugins/pure-hide/` 文件夹（若不存在则创建）。
 3. 重新加载 Obsidian，在「设置」→「社区插件」中启用 Pure Hide。
 
@@ -74,7 +68,6 @@ Pure Hide 旨在让您能够**一键隐藏干扰元素**，同时精细调整**�
 1. 安装并启用插件后，如果尚未同意许可协议，插件功能不会激活。
 2. 此时 Obsidian 会弹出一个**用户许可协议**窗口，其中明确列出了**严禁倒卖、禁止商业利用、保留版权声明**等核心条款，请仔细阅读。
 3. 点击“**同意并继续**”后，所有功能即可正常使用。若关闭窗口或点击“拒绝”，插件仅保留一个命令 `Pure Hide: 查看许可协议`，可随时再次打开协议窗口确认。
-4. 该决定会被记住，后续启动不再弹出。
 
 ### 2. 基础配置
 
@@ -124,41 +117,42 @@ Pure Hide 旨在让您能够**一键隐藏干扰元素**，同时精细调整**�
 
 ---
 
-## 🔒 许可证
+## 📜 许可证
 
-本软件为**专有软件**，保留所有权利。使用前须同意最终用户许可协议（EULA）。详细条款请参阅  [LICENSE.md] (LICENSE.md)。
+本软件为 **专有软件**，保留所有权利。  
+Copyright © 2026 yuangwu. All rights reserved.
 
+您可以在个人非商业用途下免费使用，但必须遵守最终用户许可协议（EULA）中的各项限制。详细条款请见 [LICENSE.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/LICENSE.md)（或插件内置 EULA 弹窗）。
+
+## 📜 免责声明
+
+1. 使用本插件前，请备份你的数据，以防意外。
+2. 本程序仅供学习交流使用。
+3. 因使用插件造成的任何数据损失，由使用者自行承担。
+4. 使用或修改本插件，即视为同意上述免责声明。
 ---
 
 ## 🙏 支持开发者
 
-如果 Pure Hide 对您有帮助，欢迎通过「**支持开发者 / 打赏**」命令或设置页面的打赏按钮赞助作者，您的支持是持续维护的动力。
+如果觉得插件对你有帮助，欢迎**打赏赞助**，让我有更多动力维护和更新。
+
+[Donate.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/yuangwu/Donate.md)
 
 ---
 
 ## 🤝 贡献与反馈
 
-由于本软件采用专有许可证，**目前不接受源代码级别的贡献（Pull Request）**。如有 Bug 报告或功能建议，请在  [GitHub Issues] (https://github.com/yuangwu/obsidian-pure-hide/issues) 中提出。文档改进（如 README、CHANGELOG）欢迎提交 PR。
+由于本软件采用专有许可证，**目前不接受源代码级别的贡献（Pull Request）**。如有 Bug 报告或功能建议，请在  [GitHub Issues](https://github.com/yuangwu/obsidian-pure-hide/issues) 中提出。文档改进（如 README、CHANGELOG）欢迎提交 PR。
 
 ---
 
-## 📄 更新日志
+## 🔗 相关文档
 
-查看  [CHANGELOG.md] (CHANGELOG.md) 了解各版本变更。
-
----
-
-## 🗺️ 路线图
-
-查看  [ROADMAP.md] (ROADMAP.md) 了解未来规划。
+- [README.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/README.md) - 项目介绍
+- [LICENSE.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/LICENSE.md) - 项目许可协议
+- [CHANGELOG.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CHANGELOG.md) - 更新日志
+- [CONTRIBUTING.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CONTRIBUTING.md) - 贡献指南
 
 ---
 
-## 🔗 相关链接
-
--  [GitHub 仓库] (https://github.com/yuangwu/obsidian-pure-hide)
--  [作者主页] (https://github.com/yuangwu)
-
----
-
-**Pure Hide** — 让您的 Obsidian 更纯净、更优雅。
+**Pure Hide** — 让您的 Obsidian 更纯净、更优雅🎉

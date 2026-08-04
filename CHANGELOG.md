@@ -119,8 +119,7 @@
 
 ## 🔗 相关文档
 
- - [README.md](README.md) - 项目介绍
- - [LICENSE.md](LICENSE.md) - 项目许可协议
- - [CHANGELOG.md](CHANGELOG.md) - 更新日志
- - [CONTRIBUTING.md](CONTRIBUTING.md) - 贡献指南
- - [ROADMAP.md](ROADMAP.md) - 路线图
+- [README.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/README.md) - 项目介绍
+- [LICENSE.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/LICENSE.md) - 项目许可协议
+- [CHANGELOG.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CHANGELOG.md) - 更新日志
+- [CONTRIBUTING.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CONTRIBUTING.md) - 贡献指南
