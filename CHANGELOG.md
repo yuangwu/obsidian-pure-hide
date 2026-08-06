@@ -172,7 +172,7 @@
 ## 🔗 相关文档
 
 - [README.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/README.md) — 项目介绍
-- [LICENSE.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/LICENSE.md) — AGPL-3.0 完整协议
+- [LICENSE](https://github.com/yuangwu/obsidian-pure-hide/blob/main/LICENSE) — AGPL-3.0 完整协议
 - [COMMERCIAL_LICENSE.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/COMMERCIAL_LICENSE.md) — 商业许可证说明
 - [CLA.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CLA.md) — 贡献者许可协议
 - [CHANGELOG.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CHANGELOG.md) — 更新日志（本文件）

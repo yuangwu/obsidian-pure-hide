@@ -27,7 +27,7 @@ Pure Hide 旨在让您能够**一键隐藏干扰元素**，同时精细调整**�
 本项目欢迎社区贡献，但所有贡献者需在提交第一个 Pull Request 时签署[贡献者许可协议 (CLA)](./CLA.md)，授予项目维护者对贡献代码进行再许可（包括商业许可）的权利，以维持双重许可模式的可持续性。签署方式详见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
 
 详细条款请阅读：
-- [LICENSE.md](./LICENSE) — AGPL-3.0 完整协议文本
+- [LICENSE](./LICENSE) — AGPL-3.0 完整协议文本
 - [COMMERCIAL_LICENSE.md](./COMMERCIAL_LICENSE.md) — 商业许可证说明
 - [CLA.md](./CLA.md) — 贡献者许可协议
 
@@ -171,7 +171,7 @@ Copyright © 2026 yuangwu. All rights reserved.
 ## 🔗 相关文档
 
 - [README.md](./README.md) — 项目介绍（本文件）
-- [LICENSE.md](./LICENSE) — AGPL-3.0 完整协议
+- [LICENSE](./LICENSE) — AGPL-3.0 完整协议
 - [COMMERCIAL_LICENSE.md](./COMMERCIAL_LICENSE.md) — 商业许可证说明
 - [CLA.md](./CLA.md) — 贡献者许可协议
 - [CHANGELOG.md](./CHANGELOG.md) — 更新日志
