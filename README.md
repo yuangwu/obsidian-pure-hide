@@ -1,8 +1,10 @@
 # Pure Hide
 
-**Pure Hide** 是一个为  [Obsidian](https://obsidian.md/) 设计的全能界面美化与排版增强插件，整合了**界面隐藏、独立布局、精细排版、圆角材质、毛玻璃效果、交互细节**等 100+ 可配置选项，完全基于 Obsidian 核心变量，自动适配任意主题。
--  [GitHub 仓库](https://github.com/yuangwu/obsidian-pure-hide)
--  [作者主页](https://github.com/yuangwu)
+**Pure Hide** 是一个为 [Obsidian](https://obsidian.md/) 设计的全能界面美化与排版增强插件，整合了**界面隐藏、独立布局、精细排版、圆角材质、毛玻璃效果、交互细节**等 100+ 可配置选项，完全基于 Obsidian 核心变量，自动适配任意主题。
+
+- [GitHub 仓库](https://github.com/yuangwu/obsidian-pure-hide)
+- [作者主页](https://github.com/yuangwu)
+
 ---
 
 ## 📖 简介
@@ -13,16 +15,21 @@ Pure Hide 旨在让您能够**一键隐藏干扰元素**，同时精细调整**�
 
 ## ⚠️ 许可说明
 
-本软件采用 **专有许可证（Proprietary License）**，**保留所有权利**。您需要在首次使用时主动**点击同意**最终用户许可协议（EULA）方可启用插件。您可以在遵守协议的前提下，免费用于个人非商业用途。
+本软件采用 **AGPL-3.0 双重许可 (Dual Licensing)** 模式：
 
-**严禁以下行为（包括但不限于）：**
+- **🔓 开源版**：在 [GNU Affero General Public License v3.0](./LICENSE) 下免费提供，适用于**个人、研究人员和开源项目**。您可以在遵守 AGPL-3.0 全部条款的前提下自由使用、修改和分发本软件。
+- **💼 商业版**：对于**无法遵守 AGPL-3.0 强互惠条款**的组织（例如需要将本软件集成到专有商业产品中，或提供 SaaS 服务但不希望公开源码），可向作者[购买商业许可证](./COMMERCIAL_LICENSE.md)，获得专有使用权。
 
-- 🚫 **倒卖与商业利用**：禁止在淘宝、闲鱼、小红书等平台销售、出租、租赁或转让本插件。如遇此类店铺贩售，**请不要购买！** 您支付的款项不会流向作者，您也无法获得任何更新或支持。
-- 🚫 **未经授权的修改与分发**：若以源代码形式分发，**必须保留原始版权声明及免责声明**；若以二进制形式分发，**必须在文档中复制版权和免责声明**。
-- 🚫 **删除版权标识**：不得删除、更改或遮盖本软件中的任何版权声明、商标或所有权标记。
-- 🚫 **使用原作者名义背书**：未经明确书面许可，不得使用版权持有人名称为您的衍生产品背书或推广。
+**您无需点击任何协议即可使用开源版本。** 首次启动时，插件会展示许可证信息弹窗，仅作告知用途，不会阻塞功能。
 
-详细条款请阅读 [LICENSE.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/LICENSE.md) 文件。
+### 🤝 贡献者须知
+
+本项目欢迎社区贡献，但所有贡献者需在提交第一个 Pull Request 时签署[贡献者许可协议 (CLA)](./CLA.md)，授予项目维护者对贡献代码进行再许可（包括商业许可）的权利，以维持双重许可模式的可持续性。签署方式详见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+
+详细条款请阅读：
+- [LICENSE.md](./LICENSE) — AGPL-3.0 完整协议文本
+- [COMMERCIAL_LICENSE.md](./COMMERCIAL_LICENSE.md) — 商业许可证说明
+- [CLA.md](./CLA.md) — 贡献者许可协议
 
 ---
 
@@ -50,11 +57,13 @@ Pure Hide 旨在让您能够**一键隐藏干扰元素**，同时精细调整**�
 ## 📦 如何安装
 
 ### 从 Obsidian 社区插件市场安装（待上架）
+
 1. 打开 Obsidian，进入「设置」→「社区插件」→「浏览」。
 2. 搜索 **Pure Hide**。
 3. 点击安装并启用。
 
 ### 手动安装
+
 1. 从 [GitHub Releases](https://github.com/yuangwu/obsidian-pure-hide/releases) 下载最新版本的 `main.js`、`manifest.json` 和 `styles.css`。
 2. 将这三个文件放入您的 Obsidian 仓库中的 `.obsidian/plugins/pure-hide/` 文件夹（若不存在则创建）。
 3. 重新加载 Obsidian，在「设置」→「社区插件」中启用 Pure Hide。
@@ -63,11 +72,11 @@ Pure Hide 旨在让您能够**一键隐藏干扰元素**，同时精细调整**�
 
 ## 📖 使用方法
 
-### 1. 首次使用与 EULA
+### 1. 首次启动
 
-1. 安装并启用插件后，如果尚未同意许可协议，插件功能不会激活。
-2. 此时 Obsidian 会弹出一个**用户许可协议**窗口，其中明确列出了**严禁倒卖、禁止商业利用、保留版权声明**等核心条款，请仔细阅读。
-3. 点击“**同意并继续**”后，所有功能即可正常使用。若关闭窗口或点击“拒绝”，插件仅保留一个命令 `Pure Hide: 查看许可协议`，可随时再次打开协议窗口确认。
+安装并启用插件后，Obsidian 会弹出一个**许可证信息**窗口，展示 AGPL-3.0 开源协议摘要及双重许可说明。您可以直接关闭窗口，无需任何操作即可正常使用全部功能。
+
+如果您想再次查看许可证信息，可通过命令面板执行 `Pure Hide: 查看许可证信息`。
 
 ### 2. 基础配置
 
@@ -75,13 +84,17 @@ Pure Hide 旨在让您能够**一键隐藏干扰元素**，同时精细调整**�
 
 ### 3. 快速命令
 
-插件提供两个内置命令（可通过命令面板调用）：
+插件提供多个内置命令（可通过命令面板调用）：
+
 - `Pure Hide: 切换状态栏显示`
 - `Pure Hide: 切换标签栏显示`
+- `Pure Hide: 查看许可证信息`
+- `Pure Hide: 支持开发者 / 打赏`
 
 ### 4. 设置按钮位置管理
 
 插件可以移动 Obsidian 原生的设置按钮（齿轮图标）到您喜欢的位置：
+
 - **侧边栏左下角**（默认）
 - **状态栏**
 - **标签栏**
@@ -95,7 +108,7 @@ Pure Hide 旨在让您能够**一键隐藏干扰元素**，同时精细调整**�
 所有设置项按以下分组展示（共 22 个分组，100+ 选项）：
 
 | 分组 | 主要选项 |
-| ---- | -------- |
+| ---- | ---- |
 | **界面隐藏 (Hider)** | 隐藏标签栏、状态栏、仓库名称、滚动条、侧边栏按钮、工具提示、文件浏览器按钮、搜索建议、搜索结果匹配数、操作提示、阅读视图属性 |
 | **排版与间距** | 正文行高 (px)、段落间距 (px)、启用两端对齐、两端对齐时单词间距调整 (em) |
 | **列表与序号系统** | 有序序号宽度 (px)、有序序号字号 (px)、无序圆点字号 (px)、缩进指示线水平偏移 (px) |
@@ -103,7 +116,7 @@ Pure Hide 旨在让您能够**一键隐藏干扰元素**，同时精细调整**�
 | **极简交互** | 侧边栏导航按钮悬停展开（小圆点模式）、激活标签页下划线、仓库切换器布局风格（5 种）、使用强调色、悬浮微动画 |
 | **统一圆角与材质** | 弹窗/面板圆角（5 级）、弹窗毛玻璃效果、毛玻璃背景透明度、引用块样式（4 种）、图片/视频圆角（4 级）、滚动条宽度（3 级）、仅悬浮时显示滚动条 |
 | **毛玻璃效果** | 启用全局毛玻璃（总开关） |
-| **编辑器细节** | 标题前显示 H1/H2… 等级标签、标题下使用虚线、标题折叠箭头跟随标题颜色、水平线样式（4 种）、顶部标签页高度（3 级）、文件列表显示 • 前缀、隐藏仓库根文件夹名称、移除表格前空行（性能提示）、编辑器行号显示（3 种） |
+| **编辑器细节** | 标题前显示 H 1/H 2… 等级标签、标题下使用虚线、标题折叠箭头跟随标题颜色、水平线样式（4 种）、顶部标签页高度（3 级）、文件列表显示 • 前缀、隐藏仓库根文件夹名称、移除表格前空行（性能提示）、编辑器行号显示（3 种） |
 | **进阶功能** | 聚焦段落模式、多列布局（列数 2~3）、代码块背景对比度（3 级）、代码块圆角 (px)、代码块复制按钮位置（3 种）、标签尺寸（3 级）、标签悬停放大、嵌入块边框颜色（3 种）、嵌入块内边距（3 种）、嵌入块圆角 (px)、顶栏样式（3 种）、顶栏分割线样式（4 种）、折叠指示器样式（3 种）、折叠动画（2 种）、装订线背景（3 种）、弹窗动画类型（4 种）、右键菜单密度（3 种）、Dataview 表格行高（3 种）、Dataview 表头加粗、Dataview 卡片圆角 (px)、日历单元格圆角 (px)、有笔记日期标记样式（3 种）、Canvas 卡片圆角跟随全局、Excalidraw 工具栏毛玻璃 |
 | **排版增强** | 高亮标记样式（4 种）、斜体/粗体特殊渲染（4 种）、链接悬停下划线动画、正文首行缩进、阅读模式首字下沉、中文与英文/数字自动间距 |
 | **列表强化** | 任务列表复选框样式（3 种）、嵌套列表自动切换标记、列表项卡片模式 |
@@ -119,10 +132,16 @@ Pure Hide 旨在让您能够**一键隐藏干扰元素**，同时精细调整**�
 
 ## 📜 许可证
 
-本软件为 **专有软件**，保留所有权利。  
+本软件采用 **AGPL-3.0 双重许可** 模式：
+
+- **开源版**：在 [GNU Affero General Public License v3.0](./LICENSE) 下免费使用，适用于个人、研究人员和开源项目。
+- **商业版**：可向作者[购买商业许可证](./COMMERCIAL_LICENSE.md)，获得专有使用权。
+
+**贡献者须知**：所有贡献者需签署[贡献者许可协议 (CLA)](./CLA.md)。详见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+
 Copyright © 2026 yuangwu. All rights reserved.
 
-您可以在个人非商业用途下免费使用，但必须遵守最终用户许可协议（EULA）中的各项限制。详细条款请见 [LICENSE.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/LICENSE.md)（或插件内置 EULA 弹窗）。
+---
 
 ## 📜 免责声明
 
@@ -130,6 +149,7 @@ Copyright © 2026 yuangwu. All rights reserved.
 2. 本程序仅供学习交流使用。
 3. 因使用插件造成的任何数据损失，由使用者自行承担。
 4. 使用或修改本插件，即视为同意上述免责声明。
+
 ---
 
 ## 🙏 支持开发者
@@ -142,17 +162,21 @@ Copyright © 2026 yuangwu. All rights reserved.
 
 ## 🤝 贡献与反馈
 
-由于本软件采用专有许可证，**目前不接受源代码级别的贡献（Pull Request）**。如有 Bug 报告或功能建议，请在  [GitHub Issues](https://github.com/yuangwu/obsidian-pure-hide/issues) 中提出。文档改进（如 README、CHANGELOG）欢迎提交 PR。
+本项目欢迎社区贡献。所有贡献者需签署[贡献者许可协议 (CLA)](./CLA.md)，详见 [CONTRIBUTING.md](./CONTRIBUTING.md)。
+
+如有 Bug 报告或功能建议，请在 [GitHub Issues](https://github.com/yuangwu/obsidian-pure-hide/issues) 中提出。
 
 ---
 
 ## 🔗 相关文档
 
-- [README.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/README.md) - 项目介绍
-- [LICENSE.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/LICENSE.md) - 项目许可协议
-- [CHANGELOG.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CHANGELOG.md) - 更新日志
-- [CONTRIBUTING.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CONTRIBUTING.md) - 贡献指南
+- [README.md](./README.md) — 项目介绍（本文件）
+- [LICENSE.md](./LICENSE) — AGPL-3.0 完整协议
+- [COMMERCIAL_LICENSE.md](./COMMERCIAL_LICENSE.md) — 商业许可证说明
+- [CLA.md](./CLA.md) — 贡献者许可协议
+- [CHANGELOG.md](./CHANGELOG.md) — 更新日志
+- [CONTRIBUTING.md](./CONTRIBUTING.md) — 贡献指南
 
 ---
 
-**Pure Hide** — 让您的 Obsidian 更纯净、更优雅🎉
+**Pure Hide** — 让您的 Obsidian 更纯净、更优雅 🎉
