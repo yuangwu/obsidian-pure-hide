@@ -1,6 +1,6 @@
 # 贡献指南
 
-感谢你对 **Obsidian Pure Hide 插件** 的关注！本项目欢迎社区贡献，无论是报告 Bug、提出功能建议，还是改进文档，我们都十分感谢。
+感谢你对 **Obsidian Bangumi 插件** 的关注！本项目欢迎社区贡献，无论是报告 Bug、提出功能建议，还是改进文档，我们都十分感谢。
 
 在贡献之前，请阅读本指南，它将帮助你快速上手。
 
@@ -8,25 +8,26 @@
 
 ## 📋 目录
 
--  [行为准则] (#行为准则)
--  [如何报告问题] (#如何报告问题)
--  [如何提出功能请求] (#如何提出功能请求)
--  [贡献者许可协议 (CLA)] (#贡献者许可协议-cla)
--  [文档贡献] (#文档贡献)
--  [代码贡献] (#代码贡献)
--  [许可证] (#许可证)
+- [行为准则](#行为准则)
+- [如何报告问题](#如何报告问题)
+- [如何提出功能请求](#如何提出功能请求)
+- [贡献者许可协议 (CLA)](#贡献者许可协议-cla)
+- [文档贡献](#文档贡献)
+- [代码贡献](#代码贡献)
+- [许可证](#许可证)
+- [常见问题 (FAQ)](#常见问题-faq)
 
 ---
 
 ## 行为准则
 
-本项目采用  [Contributor Covenant](https://www.contributor-covenant.org/zh-cn/version/2/0/code_of_conduct/) 作为行为准则。我们希望所有参与者都能保持友善、尊重、包容的交流氛围。
+本项目采用 [Contributor Covenant](https://www.contributor-covenant.org/zh-cn/version/2/0/code_of_conduct/) 作为行为准则。我们希望所有参与者都能保持友善、尊重、包容的交流氛围。
 
 ---
 
 ## 如何报告问题
 
-如果你遇到 Bug 或有其他问题，请通过  [GitHub Issues](https://github.com/yuangwu/obsidian-pure-hide/issues) 提交。提交时请包含以下信息：
+如果你遇到 Bug 或有其他问题，请通过 [GitHub Issues](https://github.com/yuangwu/obsidian-bangumi/issues) 提交。提交时请包含以下信息：
 
 1. **插件版本**（可在 Obsidian 社区插件列表或 `manifest.json` 中查看）
 2. **Obsidian 版本**（帮助 → 关于）
@@ -38,17 +39,17 @@
 示例模板：
 
 ```markdown
-**插件版本**：v1.0.2
+**插件版本**：v2.5.2
 **Obsidian 版本**：1.5.0
 **操作系统**：Windows 11
 
 **问题描述**：
-启用“毛玻璃效果”后，弹窗背景完全不透明。
+点击“单条目导入”后，输入作品名称，点击确定没有反应。
 
 **复现步骤**：
-1. 打开设置 → Pure Hide → 勾选“弹窗毛玻璃效果”
-2. 打开任意模态框（如设置、命令面板）
-3. 背景未模糊
+1. 打开命令面板，选择“Bangumi: 单条目导入”
+2. 输入“葬送的芙莉莲”，点击确定
+3. 弹窗消失，但没有任何后续反应
 
 **控制台错误**：
 （粘贴错误信息）
@@ -58,7 +59,7 @@
 
 ## 如何提出功能请求
 
-欢迎在 [Issues](https://github.com/yuangwu/obsidian-pure-hide/issues) 中提出新功能想法。请描述：
+欢迎在 [Issues](https://github.com/yuangwu/obsidian-bangumi/issues) 中提出新功能想法。请描述：
 
 - 你希望插件增加什么功能
 - 该功能能解决什么场景下的问题
@@ -82,7 +83,7 @@
 
 在您提交第一个 Pull Request 时，请在 PR 描述中明确添加以下声明：
 
-> 我已阅读并同意 [Pure Hide 贡献者许可协议 (CLA)](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CLA.md)。
+> 我已阅读并同意 [Bangumi 集成插件 贡献者许可协议 (CLA)](https://github.com/yuangwu/obsidian-bangumi/blob/main/CLA.md)。
 
 签署一次即覆盖您对本项目所有当前及未来的贡献。
 
@@ -132,8 +133,11 @@ A：不会。您保留完整的版权所有权。CLA 仅授予项目维护者将
 ### Q：我的贡献会被用于商业版本吗？
 A：是的。这是双重许可模式的核心——开源版本保持免费，同时商业版本可以包含所有贡献（包括您的）。这是维持项目长期可持续性的必要方式。
 
+### Q：如果我之前已经贡献过代码，需要补签 CLA 吗？
+A：是的。许可证变更后，所有历史贡献者需要补签 CLA。我们会通过 Issue 或邮件联系您，也欢迎您主动签署并告知我们。
+
 ---
 
 ## 问题与联系
 
-如有任何关于贡献流程或 CLA 的疑问，请通过 [GitHub Issues](https://github.com/yuangwu/obsidian-pure-hide/issues) 提出，作者会及时回复。
+如有任何关于贡献流程或 CLA 的疑问，请通过 [GitHub Issues](https://github.com/yuangwu/obsidian-bangumi/issues) 提出，作者会及时回复。
