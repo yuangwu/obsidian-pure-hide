@@ -2,13 +2,46 @@
 
 > 本文档记录了 Obsidian Pure Hide 插件所有版本的重要变更。
 
-**当前版本**：`v1.0.2`  
+**当前版本**：`v1.1.0`  
 **项目阶段**：🚀 持续迭代  
-**最后更新**：2026-08-05
+**最后更新**：2026-08-07
 
 ---
 
 ## 📋 版本列表
+
+### [v 1.1.0] - 2026-08-07 — 许可证变更与法律合规重构
+
+#### 💥 重大变更
+
+- **许可证迁移**：项目从专有许可证（Proprietary）迁移至 **AGPL-3.0 双重许可（Dual Licensing）模式**。
+  - **开源版**：在 [GNU Affero General Public License v3.0](./LICENSE) 下免费发布，适用于个人、研究人员和开源项目。
+  - **商业版**：可向作者购买商业许可证，适用于无法遵守 AGPL-3.0 条款的组织（如专有商业集成）。
+  - **CLA 引入**：所有贡献者需签署[贡献者许可协议 (CLA)](./CLA.md)，授予项目维护者对贡献代码进行再许可（包括商业许可）的权利，维持双重许可模式的可持续性。
+
+- **EULA 弹窗重构**：将原“强制同意 EULA”弹窗改为 **非阻塞的许可证信息展示弹窗**。
+  - 首次启动时展示 AGPL-3.0 摘要 + 双重许可说明 + CLA 签署提示；
+  - 用户可直接关闭弹窗，无需任何操作即可正常使用全部功能；
+  - 新增设置标志 `pure-hide-license-shown`，仅首次启动弹出，避免重复打扰；
+  - 提供命令 `Pure Hide: 查看许可证信息`，供用户随时查阅。
+
+#### 🚀 优化改进
+
+- **版权声明统一**：所有源代码文件（`main.js`、`styles.css`）头部注释从专有声明更新为 AGPL-3.0 标准版权声明，同时保留原有“星号线框”视觉风格和文件元信息。
+- **文档体系升级**：
+  - 新增 [COMMERCIAL_LICENSE.md](./COMMERCIAL_LICENSE.md) — 商业许可证说明；
+  - 新增 [CLA.md](./CLA.md) — 贡献者许可协议；
+  - 更新 [README.md](./README.md) — 许可说明、贡献指引、文档链接；
+  - 更新 [CONTRIBUTING.md](./CONTRIBUTING.md) — 添加 CLA 签署要求及 FAQ；
+  - 更新 [CHANGELOG.md](./CHANGELOG.md) — 记录本次许可证变更（本文件）。
+
+#### 📝 法律合规
+
+- 项目不再需要用户点击同意协议才能使用，符合 AGPL-3.0“无需明示接受即可使用”的自由软件原则。
+- 所有文档和代码头部已符合 AGPL-3.0 第 1 条的版权声明要求。
+- 双重许可模式已明确区分开源版和商业版的适用场景，为用户和组织提供清晰的法律选择。
+
+---
 
 ### [v 1.0.2] - 2026-08-05 — 品牌统一与 UI 优化
 
@@ -114,13 +147,13 @@
 
 ## 📋 版本规范
 
-本项目遵循 ** [语义化版本 2.0.0] (https://semver.org/lang/zh-CN/)** 规范。
+本项目遵循 ** [语义化版本 2.0.0](https://semver.org/lang/zh-CN/) ** 规范。
 
-| 版本号格式        | 说明        | 示例      |
-| ------------ | --------- | ------- |
+| 版本号格式 | 说明 | 示例 |
+| ---------- | ---- | ---- |
 | 主版本号 (MAJOR) | 不兼容的 API 变更 | 1.x.x → 2.0.0 |
 | 次版本号 (MINOR) | 向下兼容的功能新增 | 1.0.0 → 1.1.0 |
-| 修订号 (PATCH)  | 向下兼容的问题修复 | 1.0.1 → 1.0.2 |
+| 修订号 (PATCH) | 向下兼容的问题修复 | 1.0.1 → 1.0.2 |
 
 ### 变更类型说明
 
@@ -132,13 +165,15 @@
 | 文档更新 | 📝 | 文档相关更新 |
 | 废弃/移除 | ⚠️ | 已废弃或移除的功能 |
 | 安全修复 | 🔒 | 安全漏洞修复 |
-| 重大变更 | 💥 | 不兼容的 API 变更 |
+| **重大变更** | **💥** | **不兼容的 API 变更（如许可证变更）** |
 
 ---
 
 ## 🔗 相关文档
 
-- [README.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/README.md) - 项目介绍
-- [LICENSE.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/LICENSE.md) - 项目许可协议
-- [CHANGELOG.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CHANGELOG.md) - 更新日志
-- [CONTRIBUTING.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CONTRIBUTING.md) - 贡献指南
+- [README.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/README.md) — 项目介绍
+- [LICENSE.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/LICENSE.md) — AGPL-3.0 完整协议
+- [COMMERCIAL_LICENSE.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/COMMERCIAL_LICENSE.md) — 商业许可证说明
+- [CLA.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CLA.md) — 贡献者许可协议
+- [CHANGELOG.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CHANGELOG.md) — 更新日志（本文件）
+- [CONTRIBUTING.md](https://github.com/yuangwu/obsidian-pure-hide/blob/main/CONTRIBUTING.md) — 贡献指南
