@@ -1,7 +1,7 @@
 {
   "id": "pure-hide",
   "name": "Pure Hide",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "minAppVersion": "1.0.0",
   "description": "一站式控制 Obsidian 的界面，有隐藏、排版等的功能。",
   "author": "yuangwu",
