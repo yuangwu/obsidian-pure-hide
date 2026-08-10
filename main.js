@@ -1063,7 +1063,13 @@ class PureHideSettingTab extends PluginSettingTab {
     if (!this.contentWrap) return;
     this.contentWrap.empty();
     if (this.activeScene === 'all') {
-      this.renderAllGroups(this.contentWrap);
+      // 全部：按场景渲染所有子组（不再使用旧 16 组功能域结构）
+      SCENES.forEach(scene => {
+        const sceneHeader = this.contentWrap.createDiv('pure-hide-scene-header');
+        sceneHeader.textContent = scene.label;
+        sceneHeader.style.cssText = 'font-weight:600;font-size:1.05em;margin:1.2em 0 0.6em;';
+        this.renderSceneGroups(this.contentWrap, scene);
+      });
     } else {
       const scene = SCENES.find(s => s.id === this.activeScene);
       if (scene) this.renderSceneGroups(this.contentWrap, scene);
@@ -1074,72 +1080,6 @@ class PureHideSettingTab extends PluginSettingTab {
     this.emptyHint.style.cssText = 'display:none;text-align:center;padding:2em 0;color:var(--text-muted);font-size:0.9em;';
     // 应用当前过滤（保留搜索上下文）
     if (this.filterText) this.filterSettings();
-  }
-
-  /**
-   * 渲染"全部"视图：现有 16 个功能域分组（含折叠记忆）
-   */
-  renderAllGroups(container) {
-    let currentGroup = null;
-    let groupTitle = '';
-    let groupSummary = null;
-    let groupCount = 0;
-    let headingIndex = 0;
-    const collapsedList = this.plugin.settings['pure-hide-ui-state']?.collapsed || [];
-
-    for (const item of CONFIG) {
-      try {
-        if (item.type === 'heading') {
-          if (groupSummary !== null) {
-            groupSummary.textContent = groupTitle + '（' + groupCount + ' 项）';
-          }
-          const details = container.createEl('details');
-          const key = 'h' + headingIndex;
-          // 默认：核心层展开；若用户折叠过则保持折叠（折叠记忆优先）
-          if (!collapsedList.includes(key) && item.level === 'core') {
-            details.setAttribute('open', '');
-          }
-          details.style.marginBottom = '1.2em';
-          details.style.padding = '0.5em 0.8em';
-          details.style.border = '1px solid var(--background-modifier-border)';
-          details.style.borderRadius = '8px';
-          details.style.backgroundColor = 'var(--background-secondary)';
-
-          const summary = details.createEl('summary');
-          summary.textContent = item.title;
-          summary.style.fontWeight = '600';
-          summary.style.fontSize = '1.05em';
-          summary.style.cursor = 'pointer';
-          summary.style.paddingBottom = '0.3em';
-
-          details.dataset.groupSearchText = item.title.toLowerCase();
-          details.dataset.level = item.level || 'enhance';
-          details.dataset.groupKey = key;
-          details.addEventListener('toggle', () => this.toggleCollapseMemory(key, details.open));
-
-          groupTitle = item.title;
-          groupSummary = summary;
-          groupCount = 0;
-          currentGroup = details.createDiv();
-          headingIndex++;
-          continue;
-        }
-
-        if (!currentGroup) currentGroup = container;
-        groupCount++;
-        this.renderSettingItem(currentGroup, item);
-      } catch (e) {
-        console.error(`渲染选项 "${item.title || item.id}" 时出错:`, e);
-        const errEl = container.createEl('div', {
-          text: `⚠️ 选项 "${item.title || item.id}" 加载失败，详情见控制台。`
-        });
-        errEl.style.color = 'var(--text-error)';
-        errEl.style.marginBottom = '1em';
-      }
-    }
-    if (groupSummary !== null) {
-      groupSummary.textContent = groupTitle + '（' + groupCount + ' 项）';
-    }
   }
 
   /**
