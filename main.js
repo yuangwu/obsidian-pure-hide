@@ -450,12 +450,67 @@ const CONFIG = [
   }
 ];
 
+// =============================================================================
+// 场景分组定义：设置面板"场景视图"（L1 场景 → L2 子组 → L3 设置项）
+// 仅用于视图层展示，不改动 CONFIG 与设置键；双态项可在多个场景出现
+// =============================================================================
+const SCENES = [
+  {
+    id: 'edit',
+    label: '编辑体验',
+    desc: '写作输入时直接相关的设置',
+    groups: [
+      { title: '排版与间距', items: ['pure-hide-text-line-height', 'pure-hide-text-paragraph-gap', 'pure-hide-text-justify', 'pure-hide-justify-word-spacing'] },
+      { title: '列表与序号', items: ['pure-hide-list-ol-width', 'pure-hide-list-ol-font-size', 'pure-hide-list-ul-font-size', 'pure-hide-list-guide-offset'] },
+      { title: '布局与宽度', items: ['pure-hide-editor-width', 'pure-hide-multi-column', 'pure-hide-column-count'] },
+      { title: '编辑增强', items: ['pure-hide-focus-paragraph', 'pure-hide-cursor-accent', 'pure-hide-active-line-indicator', 'pure-hide-selection-accent', 'pure-hide-bracket-highlight'] },
+      { title: '代码与行号', items: ['pure-hide-codeblock-bg', 'pure-hide-codeblock-radius', 'pure-hide-codeblock-copy', 'pure-hide-linenumber', 'pure-hide-remove-table-empty-line'] },
+      { title: '列表强化', items: ['pure-hide-task-style', 'pure-hide-list-marker-variety', 'pure-hide-list-card'] },
+      { title: '标题细节', items: ['pure-hide-heading-label', 'pure-hide-heading-dash-line', 'pure-hide-heading-arrow-color', 'pure-hide-hr-style'] }
+    ]
+  },
+  {
+    id: 'read',
+    label: '阅读体验',
+    desc: '阅读模式下的排版与呈现',
+    groups: [
+      { title: '阅读布局', items: ['pure-hide-reading-width-separate', 'pure-hide-reading-width', 'pure-hide-reading-serif', 'pure-hide-reading-hyphens'] },
+      { title: '排版增强', items: ['pure-hide-highlight-style', 'pure-hide-emphasis-style', 'pure-hide-link-underline-animation', 'pure-hide-paragraph-indent', 'pure-hide-drop-cap', 'pure-hide-chinese-spacing'] },
+      { title: '阅读元素', items: ['pure-hide-quote-style', 'pure-hide-footnote-tooltip-glass', 'pure-hide-table-word-wrap', 'pure-hide-image-shadow', 'pure-hide-callout-bg-blocks'] },
+      { title: '阅读呈现', items: ['pure-hide-meta', 'pure-hide-center-inline-title'] },
+      { title: '共享排版（同时影响编辑）', items: ['pure-hide-text-line-height', 'pure-hide-text-paragraph-gap', 'pure-hide-text-justify', 'pure-hide-list-ol-width', 'pure-hide-list-ol-font-size', 'pure-hide-list-ul-font-size'] }
+    ]
+  },
+  {
+    id: 'look',
+    label: '界面外观',
+    desc: '界面元素、材质与质感',
+    groups: [
+      { title: '界面隐藏', items: ['pure-hide-tabs', 'pure-hide-status', 'pure-hide-vault', 'pure-hide-scroll', 'pure-hide-sidebar-buttons', 'pure-hide-tooltips', 'pure-hide-file-nav-header', 'pure-hide-search-suggestions', 'pure-hide-search-counts', 'pure-hide-instructions', 'pure-hide-meta'] },
+      { title: '材质与圆角', items: ['pure-hide-modal-radius', 'pure-hide-modal-glass', 'pure-hide-modal-glass-opacity', 'pure-hide-media-radius', 'pure-hide-scrollbar-style', 'pure-hide-scrollbar-hover', 'pure-hide-glass-master'] },
+      { title: '仓库与标签页', items: ['pure-hide-vault-style', 'pure-hide-vault-accent', 'pure-hide-vault-hover-animate', 'pure-hide-tab-underline', 'pure-hide-tab-height', 'pure-hide-tab-close-enlarge'] },
+      { title: '顶栏与导航', items: ['pure-hide-titlebar-style', 'pure-hide-titlebar-divider', 'pure-hide-collapse-indicator', 'pure-hide-collapse-animation', 'pure-hide-gutter-bg', 'pure-hide-breadcrumb-style', 'pure-hide-file-list-dot', 'pure-hide-hide-root-folder', 'pure-hide-file-icon-color'] },
+      { title: '弹窗与菜单', items: ['pure-hide-modal-animation', 'pure-hide-context-menu-density'] },
+      { title: '内容元素外观', items: ['pure-hide-tag-size', 'pure-hide-tag-hover', 'pure-hide-embed-border', 'pure-hide-embed-padding', 'pure-hide-embed-radius', 'pure-hide-codeblock-bg', 'pure-hide-codeblock-radius'] }
+    ]
+  },
+  {
+    id: 'sys',
+    label: '系统',
+    desc: '全局行为与入口',
+    groups: [
+      { title: '入口与全局', items: ['pure-hide-setting-button-position', 'pure-hide-saturation', 'pure-hide-contrast', 'pure-hide-transition'] }
+    ]
+  }
+];
+
 // 默认设置对象（从 CONFIG 提取）
 const DEFAULT_SETTINGS = Object.fromEntries(
   CONFIG.filter(item => item.type !== 'heading').map(item => [item.id, item.default])
 );
-// 额外添加一个内部标志，不暴露给用户设置
+// 额外添加内部标志与 UI 状态，不暴露给用户设置
 DEFAULT_SETTINGS['pure-hide-license-shown'] = false;
+DEFAULT_SETTINGS['pure-hide-ui-state'] = { scene: 'all', collapsed: [] };
 
 // =============================================================================
 // 工具函数：防抖
@@ -833,6 +888,8 @@ class PureHideSettingTab extends PluginSettingTab {
   display() {
     const { containerEl } = this;
     containerEl.empty();
+    // 恢复上次的场景 Tab（内部 UI 状态，非设置项）
+    this.activeScene = this.plugin.settings['pure-hide-ui-state']?.scene || 'all';
 
     // 标题
     containerEl.createEl('h2', { text: 'Pure Hide 设置' });
@@ -936,141 +993,17 @@ class PureHideSettingTab extends PluginSettingTab {
       input.click();
     });
 
+    // ---- 场景 Tab 栏（L1）----
+    this.tabBarEl = containerEl.createDiv('pure-hide-tab-bar');
+    this.tabBarEl.style.cssText = 'display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1em;';
+    this.bindSceneTabs(this.tabBarEl);
+
+    // ---- 内容区（L2 子组 / L3 设置项）----
+    this.contentWrap = containerEl.createDiv('pure-hide-content');
+
     // ---- 设置项渲染 ----
-    let totalOptions = 0;
-    let currentGroup = null;
-    let groupTitle = '';
-    let groupSummary = null;
-    let groupCount = 0;
-
-    for (const item of CONFIG) {
-      try {
-        if (item.type === 'heading') {
-          // 为上一分组补上设置项计数
-          if (groupSummary !== null) {
-            groupSummary.textContent = groupTitle + '（' + groupCount + ' 项）';
-          }
-          // 创建 details 分组
-          const details = containerEl.createEl('details');
-          // 整合优化：核心层分组默认展开，其余默认折叠，聚焦核心价值
-          if (item.level === 'core') {
-            details.setAttribute('open', '');
-          }
-          details.style.marginBottom = '1.2em';
-          details.style.padding = '0.5em 0.8em';
-          details.style.border = '1px solid var(--background-modifier-border)';
-          details.style.borderRadius = '8px';
-          details.style.backgroundColor = 'var(--background-secondary)';
-
-          const summary = details.createEl('summary');
-          summary.textContent = item.title;
-          summary.style.fontWeight = '600';
-          summary.style.fontSize = '1.05em';
-          summary.style.cursor = 'pointer';
-          summary.style.paddingBottom = '0.3em';
-
-          // 为分组添加搜索数据属性与层级标记（供搜索时展开折叠组）
-          details.dataset.groupSearchText = item.title.toLowerCase();
-          details.dataset.level = item.level || 'enhance';
-
-          groupTitle = item.title;
-          groupSummary = summary;
-          groupCount = 0;
-          currentGroup = details.createDiv();
-          continue;
-        }
-
-        if (!currentGroup) {
-          // 如果没有分组，则直接添加到容器
-          currentGroup = containerEl;
-        }
-
-        totalOptions++;
-        groupCount++;
-        const setting = new Setting(currentGroup)
-          .setName(item.title)
-          .setDesc(item.desc || '');
-
-        // 为设置项添加搜索数据属性（标题 + 描述）
-        const searchText = (item.title + ' ' + (item.desc || '')).toLowerCase();
-        setting.settingEl.dataset.searchText = searchText;
-
-        const id = item.id;
-        const currentValue = this.plugin.settings[id];
-
-        if (item.type === 'toggle') {
-          setting.addToggle(toggle => toggle
-            .setValue(currentValue)
-            .onChange(async (val) => {
-              this.plugin.settings[id] = val;
-              await this.plugin.saveSettings();
-              this.plugin.applySettings();
-            })
-          );
-        } else if (item.type === 'select') {
-          setting.addDropdown(dropdown => {
-            for (const opt of item.options) {
-              dropdown.addOption(opt.value, opt.label);
-            }
-            dropdown.setValue(currentValue)
-              .onChange(async (val) => {
-                this.plugin.settings[id] = val;
-                await this.plugin.saveSettings();
-                this.plugin.applySettings();
-                if (id === 'pure-hide-setting-button-position') {
-                  this.plugin.updateSettingButton();
-                }
-              });
-          });
-        } else if (item.type === 'number') {
-          const hasSlider = item.min !== undefined && item.max !== undefined && item.step !== undefined;
-          if (hasSlider) {
-            setting.addSlider(slider => {
-              slider.setLimits(item.min, item.max, item.step)
-                .setValue(currentValue)
-                .setDynamicTooltip()
-                .onChange(async (val) => {
-                  this.plugin.settings[id] = val;
-                  await this.plugin.saveSettings();
-                  this.plugin.applySettings();
-                });
-            });
-            setting.addText(text => {
-              text.setValue(String(currentValue))
-                .setDisabled(true);
-              if (text.inputEl) {
-                text.inputEl.style.width = '50px';
-              }
-            });
-          } else {
-            setting.addText(text => {
-              text.setValue(String(currentValue))
-                .setPlaceholder('数值')
-                .onChange(async (val) => {
-                  const num = parseFloat(val);
-                  if (!isNaN(num)) {
-                    this.plugin.settings[id] = num;
-                    await this.plugin.saveSettings();
-                    this.plugin.applySettings();
-                  }
-                });
-            });
-          }
-        }
-      } catch (e) {
-        console.error(`渲染选项 "${item.title || item.id}" 时出错:`, e);
-        const errEl = containerEl.createEl('div', {
-          text: `⚠️ 选项 "${item.title || item.id}" 加载失败，详情见控制台。`
-        });
-        errEl.style.color = 'var(--text-error)';
-        errEl.style.marginBottom = '1em';
-      }
-    }
-
-    // 为最后一组补上设置项计数
-    if (groupSummary !== null) {
-      groupSummary.textContent = groupTitle + '（' + groupCount + ' 项）';
-    }
+    this.totalOptions = CONFIG.filter(i => i.type !== 'heading').length;
+    this.renderContent();
 
     // ---- 绑定搜索事件（支持中文输入法 + 防抖） ----
     this.bindSearchEvents();
@@ -1099,7 +1032,7 @@ class PureHideSettingTab extends PluginSettingTab {
     footer.style.alignItems = 'center';
 
     const countEl = footer.createEl('span', {
-      text: `已加载 ${totalOptions} 个设置项`
+      text: `已加载 ${this.totalOptions} 个设置项`
     });
     countEl.style.fontSize = '0.8em';
     countEl.style.color = 'var(--text-muted)';
@@ -1121,6 +1054,279 @@ class PureHideSettingTab extends PluginSettingTab {
           }
         })
       );
+  }
+
+  /**
+   * 渲染内容区：按当前场景 Tab 渲染子组与设置项
+   */
+  renderContent() {
+    if (!this.contentWrap) return;
+    this.contentWrap.empty();
+    if (this.activeScene === 'all') {
+      this.renderAllGroups(this.contentWrap);
+    } else {
+      const scene = SCENES.find(s => s.id === this.activeScene);
+      if (scene) this.renderSceneGroups(this.contentWrap, scene);
+    }
+    // 无结果提示条（由 filterSettings 控制显隐）
+    this.emptyHint = this.contentWrap.createDiv('pure-hide-search-empty');
+    this.emptyHint.textContent = '未找到匹配的设置项';
+    this.emptyHint.style.cssText = 'display:none;text-align:center;padding:2em 0;color:var(--text-muted);font-size:0.9em;';
+    // 应用当前过滤（保留搜索上下文）
+    if (this.filterText) this.filterSettings();
+  }
+
+  /**
+   * 渲染"全部"视图：现有 16 个功能域分组（含折叠记忆）
+   */
+  renderAllGroups(container) {
+    let currentGroup = null;
+    let groupTitle = '';
+    let groupSummary = null;
+    let groupCount = 0;
+    let headingIndex = 0;
+    const collapsedList = this.plugin.settings['pure-hide-ui-state']?.collapsed || [];
+
+    for (const item of CONFIG) {
+      try {
+        if (item.type === 'heading') {
+          if (groupSummary !== null) {
+            groupSummary.textContent = groupTitle + '（' + groupCount + ' 项）';
+          }
+          const details = container.createEl('details');
+          const key = 'h' + headingIndex;
+          // 默认：核心层展开；若用户折叠过则保持折叠（折叠记忆优先）
+          if (!collapsedList.includes(key) && item.level === 'core') {
+            details.setAttribute('open', '');
+          }
+          details.style.marginBottom = '1.2em';
+          details.style.padding = '0.5em 0.8em';
+          details.style.border = '1px solid var(--background-modifier-border)';
+          details.style.borderRadius = '8px';
+          details.style.backgroundColor = 'var(--background-secondary)';
+
+          const summary = details.createEl('summary');
+          summary.textContent = item.title;
+          summary.style.fontWeight = '600';
+          summary.style.fontSize = '1.05em';
+          summary.style.cursor = 'pointer';
+          summary.style.paddingBottom = '0.3em';
+
+          details.dataset.groupSearchText = item.title.toLowerCase();
+          details.dataset.level = item.level || 'enhance';
+          details.dataset.groupKey = key;
+          details.addEventListener('toggle', () => this.toggleCollapseMemory(key, details.open));
+
+          groupTitle = item.title;
+          groupSummary = summary;
+          groupCount = 0;
+          currentGroup = details.createDiv();
+          headingIndex++;
+          continue;
+        }
+
+        if (!currentGroup) currentGroup = container;
+        groupCount++;
+        this.renderSettingItem(currentGroup, item);
+      } catch (e) {
+        console.error(`渲染选项 "${item.title || item.id}" 时出错:`, e);
+        const errEl = container.createEl('div', {
+          text: `⚠️ 选项 "${item.title || item.id}" 加载失败，详情见控制台。`
+        });
+        errEl.style.color = 'var(--text-error)';
+        errEl.style.marginBottom = '1em';
+      }
+    }
+    if (groupSummary !== null) {
+      groupSummary.textContent = groupTitle + '（' + groupCount + ' 项）';
+    }
+  }
+
+  /**
+   * 渲染指定场景的子组（L2）与设置项（L3）
+   */
+  renderSceneGroups(container, scene) {
+    const collapsedList = this.plugin.settings['pure-hide-ui-state']?.collapsed || [];
+    scene.groups.forEach((group, gi) => {
+      const details = container.createEl('details');
+      const key = scene.id + '-' + gi;
+      if (!collapsedList.includes(key)) {
+        details.setAttribute('open', '');
+      }
+      details.style.marginBottom = '1.2em';
+      details.style.padding = '0.5em 0.8em';
+      details.style.border = '1px solid var(--background-modifier-border)';
+      details.style.borderRadius = '8px';
+      details.style.backgroundColor = 'var(--background-secondary)';
+
+      const summary = details.createEl('summary');
+      summary.textContent = group.title + '（' + group.items.length + ' 项）';
+      summary.style.fontWeight = '600';
+      summary.style.fontSize = '1.05em';
+      summary.style.cursor = 'pointer';
+      summary.style.paddingBottom = '0.3em';
+
+      details.dataset.groupSearchText = group.title.toLowerCase();
+      details.dataset.groupKey = key;
+      details.addEventListener('toggle', () => this.toggleCollapseMemory(key, details.open));
+
+      const groupEl = details.createDiv();
+      group.items.forEach(id => {
+        const item = CONFIG.find(c => c.id === id);
+        if (item) this.renderSettingItem(groupEl, item);
+      });
+    });
+  }
+
+  /**
+   * 渲染单个设置项（三种类型 + 滑块数值同步 + 单项恢复默认）
+   */
+  renderSettingItem(parent, item) {
+    const id = item.id;
+    const currentValue = this.plugin.settings[id];
+    const setting = new Setting(parent)
+      .setName(item.title)
+      .setDesc(item.desc || '');
+
+    const searchText = (item.title + ' ' + (item.desc || '')).toLowerCase();
+    setting.settingEl.dataset.searchText = searchText;
+
+    if (item.type === 'toggle') {
+      setting.addToggle(toggle => toggle
+        .setValue(currentValue)
+        .onChange(async (val) => {
+          this.plugin.settings[id] = val;
+          await this.plugin.saveSettings();
+          this.plugin.applySettings();
+        })
+      );
+    } else if (item.type === 'select') {
+      setting.addDropdown(dropdown => {
+        for (const opt of item.options) {
+          dropdown.addOption(opt.value, opt.label);
+        }
+        dropdown.setValue(currentValue)
+          .onChange(async (val) => {
+            this.plugin.settings[id] = val;
+            await this.plugin.saveSettings();
+            this.plugin.applySettings();
+            if (id === 'pure-hide-setting-button-position') {
+              this.plugin.updateSettingButton();
+            }
+          });
+      });
+    } else if (item.type === 'number') {
+      const hasSlider = item.min !== undefined && item.max !== undefined && item.step !== undefined;
+      if (hasSlider) {
+        let textControl = null;
+        setting.addSlider(slider => {
+          slider.setLimits(item.min, item.max, item.step)
+            .setValue(currentValue)
+            .setDynamicTooltip()
+            .onChange(async (val) => {
+              this.plugin.settings[id] = val;
+              await this.plugin.saveSettings();
+              this.plugin.applySettings();
+              if (textControl) textControl.setValue(String(val));
+            });
+        });
+        textControl = setting.addText(text => {
+          text.setValue(String(currentValue))
+            .setDisabled(true);
+          if (text.inputEl) {
+            text.inputEl.style.width = '50px';
+          }
+        });
+      } else {
+        setting.addText(text => {
+          text.setValue(String(currentValue))
+            .setPlaceholder('数值')
+            .onChange(async (val) => {
+              const num = parseFloat(val);
+              if (!isNaN(num)) {
+                this.plugin.settings[id] = num;
+                await this.plugin.saveSettings();
+                this.plugin.applySettings();
+              }
+            });
+        });
+      }
+    }
+
+    // 单项恢复默认值
+    setting.addExtraButton(btn => btn
+      .setIcon('reset')
+      .setTooltip('恢复默认值')
+      .onClick(async () => {
+        this.plugin.settings[id] = DEFAULT_SETTINGS[id];
+        await this.plugin.saveSettings();
+        this.plugin.applySettings();
+        this.renderContent();
+      }));
+  }
+
+  /**
+   * 渲染场景 Tab 栏（L1）
+   */
+  bindSceneTabs(tabBar) {
+    const tabs = [{ id: 'all', label: '全部' }].concat(SCENES.map(s => ({ id: s.id, label: s.label })));
+    tabBar.empty();
+    tabs.forEach(t => {
+      const btn = tabBar.createEl('button', { text: t.label });
+      btn.style.cssText = 'padding:4px 12px;border-radius:6px;border:1px solid var(--background-modifier-border);background:transparent;cursor:pointer;font-size:0.9em;';
+      if (t.id === this.activeScene) {
+        btn.style.background = 'var(--interactive-accent)';
+        btn.style.color = 'var(--text-on-accent)';
+        btn.style.borderColor = 'var(--interactive-accent)';
+      }
+      btn.addEventListener('click', () => this.setScene(t.id));
+    });
+  }
+
+  /**
+   * 切换场景 Tab（持久化内部状态并重渲染内容区）
+   */
+  setScene(id) {
+    this.activeScene = id;
+    const uiState = this.plugin.settings['pure-hide-ui-state'] || { scene: 'all', collapsed: [] };
+    this.plugin.settings['pure-hide-ui-state'] = { scene: id, collapsed: uiState.collapsed || [] };
+    this.plugin.saveSettings();
+    if (this.tabBarEl) this.bindSceneTabs(this.tabBarEl);
+    this.renderContent();
+  }
+
+  /**
+   * 记录子组折叠状态到内部 UI 状态（持久化）
+   */
+  toggleCollapseMemory(key, open) {
+    const uiState = this.plugin.settings['pure-hide-ui-state'] || { scene: 'all', collapsed: [] };
+    const collapsed = (uiState.collapsed || []).slice();
+    const idx = collapsed.indexOf(key);
+    if (open) {
+      if (idx >= 0) collapsed.splice(idx, 1);
+    } else if (idx < 0) {
+      collapsed.push(key);
+    }
+    this.plugin.settings['pure-hide-ui-state'] = { scene: this.activeScene, collapsed };
+    this.plugin.saveSettings();
+  }
+
+  /**
+   * 在当前视图无命中时，查找首个含命中项的其他场景（供搜索跨场景联动）
+   */
+  findSceneWithMatch(searchText) {
+    for (const scene of SCENES) {
+      if (scene.id === this.activeScene) continue;
+      for (const g of scene.groups) {
+        for (const id of g.items) {
+          const item = CONFIG.find(c => c.id === id);
+          if (item && ((item.title || '') + ' ' + (item.desc || '')).toLowerCase().includes(searchText)) {
+            return scene.id;
+          }
+        }
+      }
+    }
+    return null;
   }
 
   /**
@@ -1166,24 +1372,23 @@ class PureHideSettingTab extends PluginSettingTab {
     const searchText = this.filterText.toLowerCase().trim();
     const container = this.containerEl;
 
-    // 获取所有设置项
+    // 过滤设置项（当前视图内）
+    let visibleCount = 0;
     const settingItems = container.querySelectorAll('.setting-item');
     settingItems.forEach(el => {
       const text = el.dataset.searchText || '';
-      if (searchText === '' || text.includes(searchText)) {
-        el.style.display = '';
-      } else {
-        el.style.display = 'none';
-      }
+      const show = searchText === '' || text.includes(searchText);
+      el.style.display = show ? '' : 'none';
+      if (searchText !== '' && show) visibleCount++;
     });
 
-    // 处理分组：如果分组内所有设置项都隐藏，则隐藏整个分组
+    // 处理分组：分组内全部隐藏则隐藏分组；命中时自动展开
     const detailsList = container.querySelectorAll('details');
     detailsList.forEach(details => {
       const items = details.querySelectorAll('.setting-item');
       const total = items.length;
       if (total === 0) {
-        details.style.display = ''; // 无设置项的分组保持可见（理论上不会出现）
+        details.style.display = '';
         return;
       }
       let hiddenCount = 0;
@@ -1200,6 +1405,20 @@ class PureHideSettingTab extends PluginSettingTab {
         }
       }
     });
+
+    // 无结果提示（仅在搜索词非空且当前视图无命中时显示）
+    if (this.emptyHint) {
+      this.emptyHint.style.display = (searchText !== '' && visibleCount === 0) ? '' : 'none';
+    }
+
+    // 跨场景联动：当前视图无命中时，自动切到首个含命中的场景
+    if (searchText !== '' && visibleCount === 0 && this.activeScene !== 'all') {
+      const target = this.findSceneWithMatch(searchText);
+      if (target) {
+        this.setScene(target);
+        return; // setScene 内部已重渲染并再次调用 filterSettings
+      }
+    }
   }
 }
 
