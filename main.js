@@ -724,6 +724,14 @@ class PureHidePlugin extends Plugin {
       </p>
     `;
 
+    // 统一外部链接打开方式（三级降级：shell.openExternal → window.open → 复制剪贴板）
+    content.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        openExternalUrl(a.href);
+      });
+    });
+
     const actions = container.createDiv('pure-hide-eula-actions');
     const closeBtn = actions.createEl('button', { text: '我已知晓', cls: 'agree-btn' });
     // 仅首次展示（force=false）时记录已读标志；命令强制查看（force=true）不改变标志
@@ -772,7 +780,7 @@ class PureHidePlugin extends Plugin {
       const btn = buttonGroup.createEl('button', { text: `${link.icon} ${link.label}`, cls: 'donate-link-btn' });
       btn.addEventListener('click', () => {
         if (link.url) {
-          window.open(link.url, '_blank');
+          openExternalUrl(link.url);
         } else {
           new Notice('该赞助渠道暂未设置');
         }
@@ -1516,6 +1524,36 @@ function highlightText(text, keyword) {
   const esc = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
   const re = new RegExp('(' + esc + ')', 'gi');
   return text.replace(re, '<mark style="background:var(--text-highlight-bg);color:inherit;">$1</mark>');
+}
+
+/**
+ * 打开外部链接（三级降级策略）：
+ * 1) Electron shell.openExternal —— 系统默认浏览器（Obsidian 桌面端首选）
+ * 2) window.open(url, '_blank') —— 降级方案（带 _blank 提高成功率）
+ * 3) 复制授权 URL 到剪贴板 —— 以上均失败时，用户可手动粘贴访问
+ */
+function openExternalUrl(url) {
+  if (!url) return;
+  // 1. Electron 系统浏览器
+  try {
+    const { shell } = require('electron');
+    if (shell && typeof shell.openExternal === 'function') {
+      shell.openExternal(url);
+      return;
+    }
+  } catch (e) { /* 环境不支持时继续降级 */ }
+  // 2. window.open（_blank）
+  try {
+    const win = window.open(url, '_blank');
+    if (win) return;
+  } catch (e) { /* 被拦截时继续降级 */ }
+  // 3. 复制到剪贴板
+  try {
+    navigator.clipboard.writeText(url);
+    new Notice('链接打开失败，已复制到剪贴板，请粘贴到浏览器访问');
+  } catch (e) {
+    new Notice('无法打开链接，请手动访问：' + url);
+  }
 }
 
 module.exports = PureHidePlugin;
