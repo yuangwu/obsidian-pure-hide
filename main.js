@@ -698,15 +698,8 @@ class PureHidePlugin extends Plugin {
       ribbonIcon.addClass('pure-hide-settings-btn');
       this.settingButtonEl = ribbonIcon;
     } else if (actualPosition === 'statusbar') {
-      // 状态栏项：使用齿轮图标
-      const statusBarItem = this.addStatusBarItem();
-      statusBarItem.addClass('pure-hide-settings-btn');
-      // 创建 span 容器并设置齿轮图标
-      const iconContainer = statusBarItem.createSpan();
-      setIcon(iconContainer, 'settings');
-      statusBarItem.setAttribute('aria-label', '打开设置');
-      statusBarItem.addEventListener('click', openSystemSettings);
-      this.settingButtonEl = statusBarItem;
+      // 状态栏项：使用齿轮图标（复用公共方法）
+      this.settingButtonEl = this.createStatusBarButton();
     } else if (actualPosition === 'tabbar') {
       // 附加到顶部标签栏容器中，同样使用齿轮图标
       const tabHeaderContainer = document.querySelector('.workspace-tab-header-container');
@@ -722,15 +715,24 @@ class PureHidePlugin extends Plugin {
       } else {
         // 降级到状态栏（图标形式）
         console.warn('Pure Hide: 未找到标签栏容器，设置按钮将显示在状态栏');
-        const statusBarItem = this.addStatusBarItem();
-        statusBarItem.addClass('pure-hide-settings-btn');
-        const iconContainer = statusBarItem.createSpan();
-        setIcon(iconContainer, 'settings');
-        statusBarItem.setAttribute('aria-label', '打开设置');
-        statusBarItem.addEventListener('click', openSystemSettings);
-        this.settingButtonEl = statusBarItem;
+        this.settingButtonEl = this.createStatusBarButton();
       }
     }
+  }
+
+  /**
+   * 在状态栏创建带齿轮图标的设置按钮
+   * @returns {HTMLElement} 状态栏项元素
+   */
+  createStatusBarButton() {
+    const statusBarItem = this.addStatusBarItem();
+    statusBarItem.addClass('pure-hide-settings-btn');
+    // 创建 span 容器并设置齿轮图标
+    const iconContainer = statusBarItem.createSpan();
+    setIcon(iconContainer, 'settings');
+    statusBarItem.setAttribute('aria-label', '打开设置');
+    statusBarItem.addEventListener('click', () => this.app.setting.open());
+    return statusBarItem;
   }
 
   /**
@@ -903,17 +905,29 @@ class PureHideSettingTab extends PluginSettingTab {
         const text = await file.text();
         try {
           const imported = JSON.parse(text);
-          // 合并导入（只覆盖存在的键）
+          // 合并导入：仅接受存在于 CONFIG 且类型匹配的配置键，跳过无效项
+          let accepted = 0;
+          let rejected = 0;
           for (const key of Object.keys(imported)) {
-            if (key in this.plugin.settings) {
-              this.plugin.settings[key] = imported[key];
+            const item = CONFIG.find(c => c.id === key);
+            const val = imported[key];
+            const valid = item && (
+              (item.type === 'toggle' && typeof val === 'boolean') ||
+              (item.type === 'number' && typeof val === 'number' && !isNaN(val)) ||
+              (item.type === 'select' && typeof val === 'string' && item.options.some(o => o.value === val))
+            );
+            if (valid) {
+              this.plugin.settings[key] = val;
+              accepted++;
+            } else {
+              rejected++;
             }
           }
           await this.plugin.saveSettings();
           this.plugin.applySettings();
           this.plugin.updateSettingButton();
           this.display();
-          new Notice('设置导入成功');
+          new Notice(rejected > 0 ? `设置导入成功：接受 ${accepted} 项，跳过 ${rejected} 项无效配置` : `设置导入成功：接受 ${accepted} 项`);
         } catch (err) {
           new Notice('导入失败：无效的 JSON 文件');
           console.error(err);
