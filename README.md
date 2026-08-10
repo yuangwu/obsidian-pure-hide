@@ -2,6 +2,8 @@
 
 **Pure Hide** 是一个为 [Obsidian](https://obsidian.md/) 设计的全能界面美化与排版增强插件，整合了**界面隐藏、独立布局、精细排版、圆角材质、毛玻璃效果、交互细节**等 100+ 可配置选项，完全基于 Obsidian 核心变量，自动适配任意主题。
 
+**当前版本**：v1.1.1（2026-08-10）—— 设置面板三级分层、搜索自动展开、文档合规与代码质量优化
+
 - [GitHub 仓库](https://github.com/yuangwu/obsidian-pure-hide)
 - [作者主页](https://github.com/yuangwu)
 
@@ -80,7 +82,7 @@ Pure Hide 旨在让您能够**一键隐藏干扰元素**，同时精细调整**�
 
 ### 2. 基础配置
 
-打开 **设置 → 插件选项 → Pure Hide**，您将看到按功能分组的所有可调选项。每个选项都配有清晰的描述，数值型参数支持滑块调节，实时生效。
+打开 **设置 → 插件选项 → Pure Hide**，您将看到按功能分组的可调选项。**分组按"核心 / 增强 / 长尾"三级分层**：核心层（界面隐藏、排版与间距、列表与序号系统、编辑与阅读独立布局、设置入口）默认展开，其余分组默认折叠，可通过工具栏"展开全部 / 折叠全部"切换。每个选项都配有清晰的描述，数值型参数支持滑块调节，实时生效。**搜索框支持中文输入**（含拼音组合防抖），搜索命中时会自动展开对应分组。
 
 ### 3. 快速命令
 
@@ -171,6 +173,7 @@ Copyright © 2026 yuangwu. All rights reserved.
 ## 🔗 相关文档
 
 - [README.md](./README.md) — 项目介绍（本文件）
+- [IMPROVEMENT_PLAN.md](./IMPROVEMENT_PLAN.md) — 改进计划与规划基线（开发者）
 - [LICENSE](./LICENSE) — AGPL-3.0 完整协议
 - [COMMERCIAL_LICENSE.md](./COMMERCIAL_LICENSE.md) — 商业许可证说明
 - [CLA.md](./CLA.md) — 贡献者许可协议
