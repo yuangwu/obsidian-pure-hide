@@ -1,0 +1,16 @@
+{
+  "id": "pure-hide",
+  "name": "Pure Hide",
+  "version": "1.1.0",
+  "minAppVersion": "1.0.0",
+  "description": "一站式控制 Obsidian 的界面，有隐藏、排版等的功能。",
+  "author": "yuangwu",
+  "authorUrl": "https://github.com/yuangwu/obsidian-pure-hide",
+  "fundingUrl": {
+    "爱发电": "https://ifdian.net/a/yuangwu",
+    "赞助": "https://github.com/yuangwu/obsidian-pure-hide/blob/main/yuangwu/Donate.md"
+  },
+  "isDesktopOnly": false,
+  "js": "main.js",
+  "css": "styles.css"
+}

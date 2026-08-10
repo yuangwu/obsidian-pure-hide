@@ -65,7 +65,7 @@ Pure Hide 旨在让您能够**一键隐藏干扰元素**，同时精细调整**�
 ### 手动安装
 
 1. 从 [GitHub Releases](https://github.com/yuangwu/obsidian-pure-hide/releases) 下载最新版本的 `main.js`、`manifest.json` 和 `styles.css`。
-2. 将这三个文件放入您的 Obsidian 仓库中的 `.obsidian/plugins/pure-hide/` 文件夹（若不存在则创建）。
+2. 将这三个文件放入您的 Obsidian 仓库中的 `.obsidian/plugins/obsidian-pure-hide/` 文件夹（若不存在则创建）。
 3. 重新加载 Obsidian，在「设置」→「社区插件」中启用 Pure Hide。
 
 ---
