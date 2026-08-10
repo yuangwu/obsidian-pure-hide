@@ -607,23 +607,7 @@ class PureHidePlugin extends Plugin {
 
     const actions = container.createDiv('pure-hide-eula-actions');
     const closeBtn = actions.createEl('button', { text: '我已知晓', cls: 'agree-btn' });
-    closeBtn.onclick = () => {
-      // 标记已显示，保存设置
-      this.settings['pure-hide-license-shown'] = true;
-      this.saveSettings();
-      modal.close();
-    };
-
-    // 如果强制显示，额外添加一个“不再显示”的选项？这里统一用“我已知晓”标记已读
-    // 但如果是强制显示（例如用户主动点击命令），我们不应该改变已显示状态，或者可以允许用户再次查看，但不更改标志
-    // 简单起见，强制显示时点击关闭也不改变标志，因为标志可能已经是 true。
-    // 所以，对于非强制显示，点击关闭设置标志；对于强制显示，点击关闭不设置标志（因为可能已经是 true）
-    // 但是为了逻辑简单，我们保留原有保存逻辑：只有非强制显示时才会设置标志（在 onload 中调用时 force=false）
-    // 而强制显示时（通过命令），我们不设置标志，让用户反复查看。
-
-    // 但是上面的 closeBtn 逻辑是固定的，我们需要区分 force 参数
-    // 修改：根据 force 决定是否保存标志
-    const originalOnClick = closeBtn.onclick;
+    // 仅首次展示（force=false）时记录已读标志；命令强制查看（force=true）不改变标志
     closeBtn.onclick = () => {
       if (!force) {
         this.settings['pure-hide-license-shown'] = true;
@@ -772,8 +756,11 @@ class PureHidePlugin extends Plugin {
       }
     }
     this.settings = validSettings;
-    // 保存以确保设置对象完整（顺便清理多余字段）
-    await this.saveData(this.settings);
+    // 仅当存储中存在多余字段时写盘清理，避免每次启动无条件写入
+    const hasExtraKeys = Object.keys(stored).some(key => !(key in DEFAULT_SETTINGS));
+    if (hasExtraKeys) {
+      await this.saveData(this.settings);
+    }
   }
 
   async saveSettings() {
