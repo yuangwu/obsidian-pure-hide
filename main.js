@@ -1031,8 +1031,12 @@ class PureHideSettingTab extends PluginSettingTab {
     footer.style.justifyContent = 'space-between';
     footer.style.alignItems = 'center';
 
+    // 已启用统计：与默认值不同的设置项数量
+    const enabledCount = CONFIG
+      .filter(i => i.type !== 'heading')
+      .filter(i => this.plugin.settings[i.id] !== i.default).length;
     const countEl = footer.createEl('span', {
-      text: `已加载 ${this.totalOptions} 个设置项`
+      text: `已加载 ${this.totalOptions} 个设置项 · 已启用 ${enabledCount} 项`
     });
     countEl.style.fontSize = '0.8em';
     countEl.style.color = 'var(--text-muted)';
@@ -1043,15 +1047,14 @@ class PureHideSettingTab extends PluginSettingTab {
       .addButton(btn => btn
         .setButtonText('恢复默认')
         .setWarning()
-        .onClick(async () => {
-          if (confirm('确定要重置所有设置为默认值吗？此操作不可撤销。')) {
-            // 重置为 DEFAULT_SETTINGS
+        .onClick(() => {
+          new ConfirmResetModal(this.app, async () => {
             this.plugin.settings = { ...DEFAULT_SETTINGS };
             await this.plugin.saveSettings();
             this.plugin.applySettings();
             this.plugin.updateSettingButton();
             this.display();
-          }
+          }).open();
         })
       );
   }
@@ -1159,15 +1162,19 @@ class PureHideSettingTab extends PluginSettingTab {
       const hasSlider = item.min !== undefined && item.max !== undefined && item.step !== undefined;
       if (hasSlider) {
         let textControl = null;
+        // 滑块拖动时高频触发 onChange：保存写盘做防抖，样式仍实时应用
+        if (!this._saveDebounced) {
+          this._saveDebounced = debounce(() => this.plugin.saveSettings(), 300);
+        }
         setting.addSlider(slider => {
           slider.setLimits(item.min, item.max, item.step)
             .setValue(currentValue)
             .setDynamicTooltip()
             .onChange(async (val) => {
               this.plugin.settings[id] = val;
-              await this.plugin.saveSettings();
               this.plugin.applySettings();
               if (textControl) textControl.setValue(String(val));
+              this._saveDebounced();
             });
         });
         textControl = setting.addText(text => {
@@ -1312,13 +1319,25 @@ class PureHideSettingTab extends PluginSettingTab {
     const searchText = this.filterText.toLowerCase().trim();
     const container = this.containerEl;
 
-    // 过滤设置项（当前视图内）
+    // 过滤设置项（当前视图内）并高亮命中文字
     let visibleCount = 0;
     const settingItems = container.querySelectorAll('.setting-item');
     settingItems.forEach(el => {
       const text = el.dataset.searchText || '';
       const show = searchText === '' || text.includes(searchText);
       el.style.display = show ? '' : 'none';
+      // 搜索命中高亮：首次记录原始标题，之后按需包裹 <mark>
+      const nameEl = el.querySelector('.setting-item-name');
+      if (nameEl) {
+        if (el.dataset.rawTitle === undefined) {
+          el.dataset.rawTitle = nameEl.textContent;
+        }
+        if (searchText !== '') {
+          nameEl.innerHTML = highlightText(el.dataset.rawTitle, searchText);
+        } else if (nameEl.textContent !== el.dataset.rawTitle) {
+          nameEl.textContent = el.dataset.rawTitle;
+        }
+      }
       if (searchText !== '' && show) visibleCount++;
     });
 
@@ -1327,14 +1346,23 @@ class PureHideSettingTab extends PluginSettingTab {
     detailsList.forEach(details => {
       const items = details.querySelectorAll('.setting-item');
       const total = items.length;
-      if (total === 0) {
-        details.style.display = '';
-        return;
-      }
+      // 分组标题命中（A6）：显示组内全部项并展开
+      const groupText = details.dataset.groupSearchText || '';
+      const groupMatch = searchText !== '' && groupText.includes(searchText);
       let hiddenCount = 0;
       items.forEach(item => {
         if (item.style.display === 'none') hiddenCount++;
       });
+      if (groupMatch) {
+        items.forEach(item => { item.style.display = ''; });
+        visibleCount += hiddenCount;
+        hiddenCount = 0;
+      }
+      if (total === 0) {
+        details.style.display = (searchText === '' || groupMatch) ? '' : 'none';
+        if (groupMatch) details.open = true;
+        return;
+      }
       if (searchText !== '' && hiddenCount === total) {
         details.style.display = 'none';
       } else {
@@ -1360,6 +1388,46 @@ class PureHideSettingTab extends PluginSettingTab {
       }
     }
   }
+}
+
+// =============================================================================
+// 重置确认弹窗（替代原生 confirm，风格与 Obsidian 一致）
+// =============================================================================
+class ConfirmResetModal extends Modal {
+  constructor(app, onConfirm) {
+    super(app);
+    this.onConfirm = onConfirm;
+  }
+
+  onOpen() {
+    const { contentEl } = this;
+    contentEl.createEl('h3', { text: '重置所有设置' });
+    contentEl.createEl('p', { text: '确定要将全部选项恢复为插件默认值吗？此操作不可撤销。' });
+    const btnRow = contentEl.createDiv();
+    btnRow.style.cssText = 'display:flex;gap:8px;justify-content:flex-end;margin-top:16px;';
+    const cancelBtn = btnRow.createEl('button', { text: '取消' });
+    cancelBtn.addEventListener('click', () => this.close());
+    const okBtn = btnRow.createEl('button', { text: '确认重置', cls: 'mod-warning' });
+    okBtn.addEventListener('click', () => {
+      this.onConfirm();
+      this.close();
+    });
+  }
+
+  onClose() {
+    const { contentEl } = this;
+    contentEl.empty();
+  }
+}
+
+/**
+ * 高亮文本中的搜索命中片段（转义正则特殊字符，大小写不敏感）
+ */
+function highlightText(text, keyword) {
+  if (!keyword) return text;
+  const esc = keyword.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const re = new RegExp('(' + esc + ')', 'gi');
+  return text.replace(re, '<mark style="background:var(--text-highlight-bg);color:inherit;">$1</mark>');
 }
 
 module.exports = PureHidePlugin;
