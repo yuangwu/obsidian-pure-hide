@@ -22,7 +22,7 @@ const { Plugin, PluginSettingTab, Setting, Modal, Notice, setIcon } = require('o
 // =============================================================================
 const CONFIG = [
   // -------- 界面隐藏 (Hider) --------
-  { type: 'heading', title: '🙈 界面隐藏 (Hider)' },
+  { type: 'heading', title: '界面隐藏 (Hider)', level: 'core' },
   { id: 'pure-hide-tabs', title: '隐藏标签栏', desc: '隐藏窗口顶部的标签页容器。', type: 'toggle', default: false, className: 'pure-hide-tabs' },
   { id: 'pure-hide-status', title: '隐藏状态栏', desc: '隐藏字数、字符数、反向链接计数。', type: 'toggle', default: false, className: 'pure-hide-status' },
   { id: 'pure-hide-vault', title: '隐藏仓库名称', desc: '隐藏仓库资料。注意：这会同时隐藏设置和仓库切换器图标，可通过快捷键或命令面板打开。', type: 'toggle', default: false, className: 'pure-hide-vault' },
@@ -36,21 +36,21 @@ const CONFIG = [
   { id: 'pure-hide-meta', title: '阅读视图隐藏属性', desc: '在阅读视图中隐藏属性区域。', type: 'toggle', default: false, className: 'pure-hide-meta' },
 
   // -------- 排版与间距 --------
-  { type: 'heading', title: '📐 排版与间距' },
+  { type: 'heading', title: '排版与间距', level: 'core' },
   { id: 'pure-hide-text-line-height', title: '正文行高 (px)', desc: '建议 28~44，数值越大行距越宽', type: 'number', default: 36, unit: 'px', min: 20, max: 60, step: 1 },
   { id: 'pure-hide-text-paragraph-gap', title: '段落间距 (px)', desc: '段落之间的额外间距', type: 'number', default: 3.4, unit: 'px', min: 0, max: 20, step: 0.1 },
   { id: 'pure-hide-text-justify', title: '启用两端对齐 (Justify)', desc: '使正文、列表文字左右对齐，配合英文断字效果更佳', type: 'toggle', default: false, className: 'pure-hide-text-justify' },
   { id: 'pure-hide-justify-word-spacing', title: '两端对齐时单词间距调整 (em)', desc: '负值可压缩单词间距，推荐 -0.05 ~ 0', type: 'number', default: -0.05, unit: 'em', min: -0.2, max: 0.2, step: 0.01 },
 
   // -------- 列表与序号系统 --------
-  { type: 'heading', title: '📋 列表与序号系统' },
+  { type: 'heading', title: '列表与序号系统', level: 'core' },
   { id: 'pure-hide-list-ol-width', title: '有序序号宽度 (px)', desc: '数字序号占用的水平空间', type: 'number', default: 40, unit: 'px', min: 20, max: 80, step: 1 },
   { id: 'pure-hide-list-ol-font-size', title: '有序序号字号 (px)', type: 'number', default: 20, unit: 'px', min: 12, max: 40, step: 1 },
   { id: 'pure-hide-list-ul-font-size', title: '无序圆点字号 (px)', type: 'number', default: 14, unit: 'px', min: 10, max: 30, step: 1 },
   { id: 'pure-hide-list-guide-offset', title: '缩进指示线水平偏移 (px)', desc: '调整编辑器中缩进辅助线的左右位置', type: 'number', default: 5, unit: 'px', min: -10, max: 20, step: 1 },
 
   // -------- 编辑与阅读独立布局 --------
-  { type: 'heading', title: '📖 编辑与阅读独立布局' },
+  { type: 'heading', title: '编辑与阅读独立布局', level: 'core' },
   { id: 'pure-hide-editor-width', title: '编辑模式宽度 (px)', desc: '编辑器中正文内容的最大宽度', type: 'number', default: 800, unit: 'px', min: 400, max: 2000, step: 10 },
   { id: 'pure-hide-reading-width-separate', title: '单独控制阅读模式宽度', desc: '启用后，阅读模式宽度独立于编辑模式', type: 'toggle', default: false, className: 'pure-hide-reading-width-separate' },
   { id: 'pure-hide-reading-width', title: '阅读模式宽度 (px)', desc: '建议 650~800，仅在单独控制阅读宽度启用时生效', type: 'number', default: 720, unit: 'px', min: 400, max: 2000, step: 10 },
@@ -58,7 +58,7 @@ const CONFIG = [
   { id: 'pure-hide-reading-hyphens', title: '启用英文断字 (配合两端对齐)', type: 'toggle', default: false, className: 'pure-hide-reading-hyphens' },
 
   // -------- 极简交互 --------
-  { type: 'heading', title: '🧘 极简交互' },
+  { type: 'heading', title: '极简交互', level: 'enhance' },
   { id: 'pure-hide-nav-auto-hide', title: '侧边栏导航按钮悬停展开（小圆点模式）', desc: '默认缩成小圆点，鼠标悬停时才展开为完整按钮（仅在鼠标设备生效）', type: 'toggle', default: false, className: 'pure-hide-nav-auto-hide' },
   { id: 'pure-hide-tab-underline', title: '激活标签页使用下划线（替代背景高亮）', type: 'toggle', default: false, className: 'pure-hide-tab-underline' },
   {
@@ -79,7 +79,7 @@ const CONFIG = [
   { id: 'pure-hide-vault-hover-animate', title: '悬浮微动画 (缩放/上浮)', type: 'toggle', default: false, className: 'pure-hide-vault-hover-animate' },
 
   // -------- 统一圆角与材质 --------
-  { type: 'heading', title: '🎨 统一圆角与材质' },
+  { type: 'heading', title: '统一圆角与材质', level: 'enhance' },
   {
     id: 'pure-hide-modal-radius',
     title: '弹窗/面板圆角',
@@ -133,11 +133,11 @@ const CONFIG = [
   { id: 'pure-hide-scrollbar-hover', title: '仅悬浮时显示滚动条', type: 'toggle', default: false, className: 'pure-hide-scrollbar-hover' },
 
   // -------- 毛玻璃全局总控 --------
-  { type: 'heading', title: '🔮 毛玻璃效果' },
+  { type: 'heading', title: '毛玻璃效果', level: 'enhance' },
   { id: 'pure-hide-glass-master', title: '启用全局毛玻璃', desc: '关闭后将彻底禁用所有毛玻璃效果（弹窗、命令面板、引用块等）', type: 'toggle', default: true, className: 'pure-hide-glass-master' },
 
   // -------- 编辑器细节 --------
-  { type: 'heading', title: '✍️ 编辑器细节' },
+  { type: 'heading', title: '编辑器细节', level: 'enhance' },
   { id: 'pure-hide-heading-label', title: '标题前显示 H1/H2… 等级标签', type: 'toggle', default: false, className: 'pure-hide-heading-label' },
   { id: 'pure-hide-heading-dash-line', title: '标题下使用虚线（替代主题默认实线）', type: 'toggle', default: false, className: 'pure-hide-heading-dash-line' },
   { id: 'pure-hide-heading-arrow-color', title: '标题折叠箭头跟随标题颜色', type: 'toggle', default: false, className: 'pure-hide-heading-arrow-color' },
@@ -180,7 +180,7 @@ const CONFIG = [
   },
 
   // -------- 进阶功能 --------
-  { type: 'heading', title: '🚀 进阶功能' },
+  { type: 'heading', title: '进阶功能', level: 'longtail' },
   { id: 'pure-hide-focus-paragraph', title: '聚焦段落模式 (淡化非活跃行)', desc: '编辑时当前行以外的内容透明度降低至 30%', type: 'toggle', default: false, className: 'pure-hide-focus-paragraph' },
   { id: 'pure-hide-multi-column', title: '多列布局 (需在笔记中添加 .multi-column 类)', desc: '将正文分为 2~3 栏，配合两端对齐效果更佳', type: 'toggle', default: false, className: 'pure-hide-multi-column' },
   { id: 'pure-hide-column-count', title: '多列布局列数', type: 'number', default: 2, unit: '', min: 2, max: 3, step: 1 },
@@ -349,13 +349,13 @@ const CONFIG = [
   { id: 'pure-hide-excalidraw-glass', title: 'Excalidraw 工具栏毛玻璃', type: 'toggle', default: false, className: 'pure-hide-excalidraw-glass' },
 
   // -------- 兼容性与性能 --------
-  { type: 'heading', title: '⚙️ 兼容性与性能' },
+  { type: 'heading', title: '兼容性与性能', level: 'enhance' },
   { id: 'pure-hide-transition', title: '启用平滑过渡动画 (可能影响性能)', desc: '仅在特定元素上启用，避免通配符', type: 'toggle', default: false, className: 'pure-hide-transition' },
   { id: 'pure-hide-saturation', title: '界面饱和度 (仅对非原生变量生效)', type: 'number', default: 1, unit: '', min: 0.8, max: 1.2, step: 0.01 },
   { id: 'pure-hide-contrast', title: '界面对比度 (仅对非原生变量生效)', type: 'number', default: 1, unit: '', min: 0.9, max: 1.1, step: 0.01 },
 
   // -------- 排版增强 --------
-  { type: 'heading', title: '📝 排版增强' },
+  { type: 'heading', title: '排版增强', level: 'enhance' },
   {
     id: 'pure-hide-highlight-style',
     title: '高亮标记样式',
@@ -386,7 +386,7 @@ const CONFIG = [
   { id: 'pure-hide-chinese-spacing', title: '中文与英文/数字自动间距', desc: '需要浏览器支持 text-spacing-trim 或 letter-spacing 调整', type: 'toggle', default: false, className: 'pure-hide-chinese-spacing' },
 
   // -------- 列表强化 --------
-  { type: 'heading', title: '📋 列表强化' },
+  { type: 'heading', title: '列表强化', level: 'enhance' },
   {
     id: 'pure-hide-task-style',
     title: '任务列表复选框样式',
@@ -402,7 +402,7 @@ const CONFIG = [
   { id: 'pure-hide-list-card', title: '列表项卡片模式', type: 'toggle', default: false, className: 'pure-hide-list-card' },
 
   // -------- UI 交互细节 --------
-  { type: 'heading', title: '✨ UI 交互细节' },
+  { type: 'heading', title: 'UI 交互细节', level: 'enhance' },
   { id: 'pure-hide-command-glass', title: '命令面板毛玻璃', type: 'toggle', default: false, className: 'pure-hide-command-glass' },
   { id: 'pure-hide-file-icon-color', title: '侧边栏文件图标按类型彩色', type: 'toggle', default: false, className: 'pure-hide-file-icon-color' },
   { id: 'pure-hide-center-inline-title', title: '阅读模式标题居中', type: 'toggle', default: false, className: 'pure-hide-center-inline-title' },
@@ -420,7 +420,7 @@ const CONFIG = [
   },
 
   // -------- 编辑器增强 --------
-  { type: 'heading', title: '✍️ 编辑器增强' },
+  { type: 'heading', title: '编辑器增强', level: 'longtail' },
   { id: 'pure-hide-cursor-accent', title: '光标颜色跟随强调色', type: 'toggle', default: false, className: 'pure-hide-cursor-accent' },
   { id: 'pure-hide-active-line-indicator', title: '当前行左侧竖线指示', type: 'toggle', default: false, className: 'pure-hide-active-line-indicator' },
   { id: 'pure-hide-selection-accent', title: '选中文本背景跟随强调色', type: 'toggle', default: false, className: 'pure-hide-selection-accent' },
@@ -428,14 +428,14 @@ const CONFIG = [
   { id: 'pure-hide-bracket-highlight', title: '括号/标签匹配高亮', type: 'toggle', default: false, className: 'pure-hide-bracket-highlight' },
 
   // -------- 阅读模式增强 --------
-  { type: 'heading', title: '📖 阅读模式增强' },
+  { type: 'heading', title: '阅读模式增强', level: 'longtail' },
   { id: 'pure-hide-footnote-tooltip-glass', title: '脚注悬停预览毛玻璃', type: 'toggle', default: false, className: 'pure-hide-footnote-tooltip-glass' },
   { id: 'pure-hide-table-word-wrap', title: '表格单元格自动换行', type: 'toggle', default: false, className: 'pure-hide-table-word-wrap' },
   { id: 'pure-hide-image-shadow', title: '图片添加柔和阴影', type: 'toggle', default: false, className: 'pure-hide-image-shadow' },
   { id: 'pure-hide-callout-bg-blocks', title: '启用预设彩色背景块', desc: '在段落前添加 `> [!bg]- red` 等 callout 语法可得到彩色背景块', type: 'toggle', default: false, className: 'pure-hide-callout-bg-blocks' },
 
   // -------- 设置按钮位置（移动系统设置按钮） --------
-  { type: 'heading', title: '🔧 设置入口' },
+  { type: 'heading', title: '设置入口', level: 'core' },
   {
     id: 'pure-hide-setting-button-position',
     title: '设置按钮位置',
@@ -939,13 +939,23 @@ class PureHideSettingTab extends PluginSettingTab {
     // ---- 设置项渲染 ----
     let totalOptions = 0;
     let currentGroup = null;
+    let groupTitle = '';
+    let groupSummary = null;
+    let groupCount = 0;
 
     for (const item of CONFIG) {
       try {
         if (item.type === 'heading') {
+          // 为上一分组补上设置项计数
+          if (groupSummary !== null) {
+            groupSummary.textContent = groupTitle + '（' + groupCount + ' 项）';
+          }
           // 创建 details 分组
           const details = containerEl.createEl('details');
-          details.setAttribute('open', '');
+          // 整合优化：核心层分组默认展开，其余默认折叠，聚焦核心价值
+          if (item.level === 'core') {
+            details.setAttribute('open', '');
+          }
           details.style.marginBottom = '1.2em';
           details.style.padding = '0.5em 0.8em';
           details.style.border = '1px solid var(--background-modifier-border)';
@@ -959,9 +969,13 @@ class PureHideSettingTab extends PluginSettingTab {
           summary.style.cursor = 'pointer';
           summary.style.paddingBottom = '0.3em';
 
-          // 为分组添加搜索数据属性
+          // 为分组添加搜索数据属性与层级标记（供搜索时展开折叠组）
           details.dataset.groupSearchText = item.title.toLowerCase();
+          details.dataset.level = item.level || 'enhance';
 
+          groupTitle = item.title;
+          groupSummary = summary;
+          groupCount = 0;
           currentGroup = details.createDiv();
           continue;
         }
@@ -972,6 +986,7 @@ class PureHideSettingTab extends PluginSettingTab {
         }
 
         totalOptions++;
+        groupCount++;
         const setting = new Setting(currentGroup)
           .setName(item.title)
           .setDesc(item.desc || '');
@@ -1050,6 +1065,11 @@ class PureHideSettingTab extends PluginSettingTab {
         errEl.style.color = 'var(--text-error)';
         errEl.style.marginBottom = '1em';
       }
+    }
+
+    // 为最后一组补上设置项计数
+    if (groupSummary !== null) {
+      groupSummary.textContent = groupTitle + '（' + groupCount + ' 项）';
     }
 
     // ---- 绑定搜索事件（支持中文输入法 + 防抖） ----
@@ -1174,6 +1194,10 @@ class PureHideSettingTab extends PluginSettingTab {
         details.style.display = 'none';
       } else {
         details.style.display = '';
+        // 整合优化：搜索命中时自动展开分组，避免结果藏在折叠组内
+        if (searchText !== '') {
+          details.open = true;
+        }
       }
     });
   }

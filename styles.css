@@ -80,14 +80,10 @@ body.pure-hide-text-justify.pure-hide-reading-hyphens .markdown-preview-view li 
 }
 
 /* ===============================================================
-   PART 4: 自定义序号字体 (Base64 保持不变)
+   PART 4: 自定义序号字体 —— 已移除（v1.1.x 整合优化）
+   原 @font-face 内嵌 Base64 woff 无任何规则引用，列表序号已统一
+   使用 var(--font-monospace)，删除以减小 CSS 体积、加快加载。
    =============================================================== */
-@font-face {
-  font-family: "number-font";
-  src: url("data:font/woff;charset=utf-8;base64,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") format("woff");
-  font-weight: 100;
-  font-style: normal;
-}
 
 /* ===============================================================
    PART 5: 列表序号与圆点样式 (复用核心颜色和字体)
@@ -1036,31 +1032,14 @@ body.pure-hide-vault:not(.is-mobile) .workspace-split.mod-left-split .workspace-
   color: var(--text-muted);
 }
 
-/* 打赏按钮 – 呼吸光晕 + 悬停反馈 */
+/* 打赏按钮 – 悬停反馈（整合优化：移除呼吸光晕动画，减性能开销） */
 .pure-hide-donate-glow-btn {
-  animation: donate-glow 2s ease-in-out infinite;
   transition: transform 0.15s, box-shadow 0.15s;
   border-radius: 8px;
 }
 .pure-hide-donate-glow-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px color-mix(in srgb, var(--interactive-accent) 40%, transparent);
-}
-
-@keyframes donate-glow {
-  0%, 100% {
-    box-shadow: 0 0 0 0 color-mix(in srgb, #ffa94d 30%, transparent);
-  }
-  50% {
-    box-shadow: 0 0 0 8px color-mix(in srgb, #ffa94d 0%, transparent);
-  }
-}
-
-/* 尊重系统减少动画偏好 */
-@media (prefers-reduced-motion: reduce) {
-  .pure-hide-donate-glow-btn {
-    animation: none;
-  }
 }
 
 /* ===============================================================
