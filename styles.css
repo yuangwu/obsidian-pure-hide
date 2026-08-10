@@ -1032,14 +1032,31 @@ body.pure-hide-vault:not(.is-mobile) .workspace-split.mod-left-split .workspace-
   color: var(--text-muted);
 }
 
-/* 打赏按钮 – 悬停反馈（整合优化：移除呼吸光晕动画，减性能开销） */
+/* 打赏按钮 – 呼吸光晕 + 悬停反馈（用户确认保留呼吸动画） */
 .pure-hide-donate-glow-btn {
+  animation: donate-glow 2s ease-in-out infinite;
   transition: transform 0.15s, box-shadow 0.15s;
   border-radius: 8px;
 }
 .pure-hide-donate-glow-btn:hover {
   transform: translateY(-2px);
   box-shadow: 0 4px 12px color-mix(in srgb, var(--interactive-accent) 40%, transparent);
+}
+
+@keyframes donate-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 color-mix(in srgb, #ffa94d 30%, transparent);
+  }
+  50% {
+    box-shadow: 0 0 0 8px color-mix(in srgb, #ffa94d 0%, transparent);
+  }
+}
+
+/* 尊重系统减少动画偏好 */
+@media (prefers-reduced-motion: reduce) {
+  .pure-hide-donate-glow-btn {
+    animation: none;
+  }
 }
 
 /* ===============================================================
