@@ -1,6 +1,6 @@
 # 🗺️ Pure Hide 插件 - 路线图
 
-**当前版本**：`v1.1.0`  
+**当前版本**：`v1.1.1`  
 **最后更新**：2026-08-10
 
 本文档概述了 **Obsidian Pure Hide 插件** 的已实现功能、当前开发重点以及未来规划。路线图会根据用户反馈动态调整，欢迎通过 [GitHub Issues](https://github.com/yuangwu/obsidian-pure-hide/issues) 提出建议。
