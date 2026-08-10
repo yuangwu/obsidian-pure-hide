@@ -504,6 +504,70 @@ const SCENES = [
   }
 ];
 
+// =============================================================================
+// 预设主题包（B9）：内置三套一键应用配置
+// 叠加式应用（仅覆盖预设包含的键，其余保持用户配置）；值均为 CONFIG 合法值
+// =============================================================================
+const PRESETS = [
+  {
+    id: 'minimal-writing',
+    name: '极简写作',
+    desc: '隐藏干扰元素，聚焦编辑器内容',
+    settings: {
+      'pure-hide-tabs': true,
+      'pure-hide-status': true,
+      'pure-hide-tooltips': true,
+      'pure-hide-instructions': true,
+      'pure-hide-meta': true,
+      'pure-hide-text-line-height': 38,
+      'pure-hide-text-paragraph-gap': 4,
+      'pure-hide-editor-width': 760,
+      'pure-hide-focus-paragraph': true,
+      'pure-hide-center-inline-title': true,
+      'pure-hide-linenumber': 'pure-hide-linenumber-hover',
+      'pure-hide-glass-master': false
+    }
+  },
+  {
+    id: 'immersive-reading',
+    name: '沉浸阅读',
+    desc: '阅读模式优先：衬线字体、适中宽度、无干扰',
+    settings: {
+      'pure-hide-tabs': true,
+      'pure-hide-scrollbar-hover': true,
+      'pure-hide-reading-width-separate': true,
+      'pure-hide-reading-width': 680,
+      'pure-hide-reading-serif': true,
+      'pure-hide-reading-hyphens': true,
+      'pure-hide-meta': true,
+      'pure-hide-center-inline-title': true,
+      'pure-hide-footnote-tooltip-glass': true,
+      'pure-hide-table-word-wrap': true,
+      'pure-hide-image-shadow': true
+    }
+  },
+  {
+    id: 'card-browsing',
+    name: '卡片式浏览',
+    desc: '圆角卡片风格，视觉层级丰富',
+    settings: {
+      'pure-hide-modal-radius': 'pure-hide-modal-radius-lg',
+      'pure-hide-media-radius': 'pure-hide-media-radius-lg',
+      'pure-hide-codeblock-radius': 12,
+      'pure-hide-embed-radius': 12,
+      'pure-hide-dataview-card-radius': 16,
+      'pure-hide-calendar-cell-radius': 10,
+      'pure-hide-canvas-radius-sync': true,
+      'pure-hide-list-card': true,
+      'pure-hide-breadcrumb-style': 'pure-hide-breadcrumb-pill',
+      'pure-hide-tag-size': 'pure-hide-tag-large',
+      'pure-hide-tag-hover': true,
+      'pure-hide-modal-animation': 'pure-hide-modal-scale',
+      'pure-hide-quote-style': 'pure-hide-quote-card'
+    }
+  }
+];
+
 // 默认设置对象（从 CONFIG 提取）
 const DEFAULT_SETTINGS = Object.fromEntries(
   CONFIG.filter(item => item.type !== 'heading').map(item => [item.id, item.default])
@@ -933,6 +997,30 @@ class PureHideSettingTab extends PluginSettingTab {
     collapseBtn.addEventListener('click', () => {
       const details = containerEl.querySelectorAll('details');
       details.forEach(d => d.open = false);
+    });
+
+    // 预设主题包（B9）：一键应用预设配置（叠加式，仅覆盖预设包含的键）
+    const presetSel = toolbar.createEl('select');
+    presetSel.style.cssText = 'padding:4px 8px;border-radius:6px;border:1px solid var(--background-modifier-border);background:var(--background-primary);color:var(--text-normal);font-size:0.9em;cursor:pointer;';
+    const presetPlaceholder = presetSel.createEl('option');
+    presetPlaceholder.value = '';
+    presetPlaceholder.textContent = '预设风格（一键应用）';
+    PRESETS.forEach(p => {
+      const opt = presetSel.createEl('option');
+      opt.value = p.id;
+      opt.textContent = p.name + ' · ' + p.desc;
+    });
+    presetSel.addEventListener('change', async () => {
+      const preset = PRESETS.find(p => p.id === presetSel.value);
+      presetSel.value = '';
+      if (!preset) return;
+      // 叠加应用：仅覆盖预设包含的键，其余保持用户配置
+      Object.assign(this.plugin.settings, preset.settings);
+      await this.plugin.saveSettings();
+      this.plugin.applySettings();
+      this.plugin.updateSettingButton();
+      this.display();
+      new Notice(`已应用预设「${preset.name}」，可继续手动微调`);
     });
 
     // 导出设置
