@@ -1,13 +1,190 @@
-# 依赖与构建产物
-node_modules/
-dist/
+# =============================================================================
+# .gitignore — 项目根目录
+# 防止依赖、构建产物、敏感信息、临时文件等被误提交至 Git 仓库。
+# 注释以 # 开头，! 开头表示例外（重新包含）。
+# 建议：配合 pre-commit hook 使用，可在提交前自动拦截违规文件。
+# =============================================================================
 
-# 工作记忆（本地隐私）
-.workbuddy/
+# =================== 依赖管理 ===================
+/node_modules                 
+# npm/yarn/pnpm 安装的依赖，体积巨大，根据 lock 文件重新生成即可
+/.pnp
+.pnp.*                        
+# Yarn 2+ Plug'n'Play 相关文件
+.yarn/*
+!.yarn/patches                
+# 保留补丁
+!.yarn/plugins                
+# 保留插件
+!.yarn/releases               
+# 保留可执行版本
+!.yarn/versions               
+# 保留版本策略
+.pnpm-store/                  
+# pnpm 全局存储目录，本地可能残留
 
-# 运行期用户配置（禁止入库）
-data.json
+# =================== 测试与覆盖率 ===================
+/coverage
+/coverage-*/
+.nyc_output/
+/test-logs/                   
+# 测试覆盖率报告及临时日志目录（需自动清空）
 
-# 系统文件
+# =================== 构建产物 ===================
+# ---- Next.js ----
+/.next/
+/.next.bak-*/                 
+# 备份（曾导致 ESLint 误扫 8 分钟）
+/.open-next/
+/out/
+/.vercel/output/
+next-env.d.ts
+
+# ---- 通用构建 ----
+/build
+/dist                         
+# 构建输出目录（与开头 “dist/” 合并）
+/output
+/dist-*/
+/target/
+/out/
+
+# ---- Cloudflare ----
+.output
+.wrangler
+cloudflare-env.d.ts           
+# Wrangler 本地状态与类型声明
+
+# ---- TypeScript ----
+*.tsbuildinfo
+tsconfig.tsbuildinfo          
+# 增量编译缓存
+
+# =================== 日志文件 ===================
+*.log
+*.log.gz
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+lerna-debug.log*              
+# 各类包管理器日志，调试完毕后无需入仓
+
+# =================== 敏感信息（安全红线） ===================
+.env
+.env.*
+!.env.example                 
+# 保留示例模板
+!.env.test                    
+# 保留测试模板
+*.pem
+*.key
+*.crt
+*.p12
+*.pfx                         
+# 私钥与证书，绝对禁止提交
+.aws/
+.secrets/
+secrets.yml
+credentials.json
+service-account.json          
+# 各类凭证与机密配置目录
+
+# =================== 操作系统与临时文件 ===================
 .DS_Store
 Thumbs.db
+ehthumbs.db
+desktop.ini
+.fseventsd
+.Spotlight-V100               
+# macOS/Windows 系统元数据文件
+*.swp
+*.swo
+*.swn
+*~
+.#*
+*.tmp
+*.temp
+tmp/
+temp/
+.history/                     
+# Vim/Emacs/Nano 交换文件、备份文件、临时目录及本地历史
+
+# =================== IDE 与编辑器 ===================
+.vscode/                      
+# VS Code 个人工作区设置（团队共享配置请放专用文件）
+!.vscode/settings.json        
+# 若需统一格式化配置，可选择性放开
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+*.code-workspace              
+# JetBrains、Eclipse、VS Code 多根工作区等 IDE 专属文件
+
+# =================== 缓存目录 ===================
+.cache/
+.parcel-cache/
+.svelte-kit/
+.nuxt/
+.nuxt-*/
+.prettiercache
+.eslintcache
+.stylelintcache               
+# 各工具构建/格式化缓存，运行时会自动重建
+
+# =================== 压缩包与二进制文件 ===================
+*.zip
+*.tar.gz
+*.tgz
+*.7z
+*.rar
+*.jar
+*.war
+*.ear
+*.exe
+*.dll
+*.so
+*.dylib                       
+# 压缩包与编译后的二进制文件（依赖通过包管理器获取）
+
+# =================== 数据库与持久化数据 ===================
+/data/                        
+# 项目本地数据目录（含 blog.db 及 backups/）
+*.db
+*.sqlite
+*.sqlite3
+# SQLite 数据库及预写式日志
+*.db-journal                  
+# 运行期用户配置（禁止入库）
+data.json
+# =================== Docker ===================
+docker-compose.override.yml   
+# 本地 Docker Compose 覆盖配置（含个人环境变量）
+
+# =================== 其他通用项 ===================
+*.pid
+*.seed
+*.lock
+*.local                       
+# 进程锁、种子数据、本地个性化配置等
+profile-*.json
+heap-*.heapsnapshot           
+# CPU 与内存性能分析快照，文件较大
+
+# =================== 项目特定额外规则 ===================
+/docs/_build/
+/scripts/temp/                
+# 文档构建输出及临时脚本生成数据
+.workbuddy/                  
+# 工作记忆（本地隐私）
+*.tmp                         
+# 构建临时文件（与上方合并但保留明确）
+*.bak-*                       
+# 备份文件（如 .next.bak-* 等）
+
+# =================== 安全提醒 ===================
+# 请确保上述规则覆盖所有敏感信息。建议将 git-secrets / trufflehog 集成至 CI，
+# 防止历史记录中的密钥泄露风险。提交前务必运行 git status 二次确认。
+# =============================================================================
